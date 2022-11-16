@@ -6,5 +6,6 @@
 
     $text = $user->getUserName();
     // echo "TEST AFFICHAGE";
-    echo "<p>Hi $text</p>";
-
+    for($i=0;$i<6;$i++){
+        echo "<p>Hi $text</p>";
+    }
