@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
-    <script src="//code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <script type="text/javascript" charset="utf8"
-        src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    <script src="//code.jquery.com/jquery-3.5.1.js" ></script>
+    <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
             console.log("start");
-            $('pokemon').DataTable();
+            $('#pokemon').DataTable();
         });
     </script>
 </head>
