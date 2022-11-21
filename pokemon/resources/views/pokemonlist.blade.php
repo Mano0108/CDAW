@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-    <?php
+        <?php
         for ($i=1; $i < 20; $i++) {
             $file = file_get_contents("https://pokeapi.co/api/v2/pokemon/$i");
             $pkmn = json_decode($file, true);
