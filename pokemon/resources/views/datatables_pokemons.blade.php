@@ -10,7 +10,6 @@
                 <th>id</th>
                 <th>Name</th>
                 <th>Image</th>
-                <th>Type</th>
             </tr>
         </thead>
         <tbody>
@@ -20,8 +19,6 @@
                 echo "<td> $pokemon->pokemon_id </td>";
                 echo "<td> $pokemon->name </td>";
                 echo "<td> <img src='$pokemon->path' alt='alternatetext'> </td>";
-                //echo "<td> <img src='https://www.pokepedia.fr/images/1/1c/Miniature_Type_Combat_EB.png' alt='alternatetext'> </td>"; //Display an image of the type for best readability
-                echo "<td> $pokemon->energy </td>";
                 echo "</tr>";
             }
             ?>

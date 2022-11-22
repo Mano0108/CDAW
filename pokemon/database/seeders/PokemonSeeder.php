@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Models\Energy;
 
 class PokemonSeeder extends Seeder
 {
@@ -21,7 +22,6 @@ class PokemonSeeder extends Seeder
             $pkmn = json_decode($file, true);
             $name = $pkmn['name'];
             $image = $pkmn['sprites']['front_default'];
-            $energy = $pkmn['types']['0']['type']['name'];
             $pvmax = $pkmn['stats']['0']['base_stat'];
             $attack = $pkmn['stats']['1']['base_stat'];
             $specialAttack = $pkmn['stats']['3']['base_stat'];
@@ -30,7 +30,6 @@ class PokemonSeeder extends Seeder
 
             DB::table('pokemon')->insert([
                 'name' => $name,
-                'energy' => $energy,
                 'pv_max' => $pvmax,
                 'attack' => $attack,
                 'special_attack' => $specialAttack,
@@ -38,6 +37,21 @@ class PokemonSeeder extends Seeder
                 'level' => $level,
                 'path' => $image
                ]);
+
+            foreach($pkmn['types'] as $type){
+                $a = $type['type']['name'];
+
+                $energies = Energy::where('name', $a)->get();
+                foreach($energies as $energy){
+                    DB::table('pokemon_energy')->insert([
+                        'FK_energy' => $energy->energy_id,
+                        'FK_pokemon' => $i
+                    
+                    ]);
+                }
+            }
+               
+            
         }
     }
 }

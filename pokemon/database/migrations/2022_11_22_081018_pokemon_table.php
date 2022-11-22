@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('pokemon', function (Blueprint $table) {
             $table->id('pokemon_id');
             $table->string('name');
-            $table->string('energy');
             $table->integer('pv_max');
             $table->integer('attack');
             $table->integer('special_attack');
