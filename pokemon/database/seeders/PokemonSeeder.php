@@ -16,7 +16,7 @@ class PokemonSeeder extends Seeder
     public function run()
     {
 
-        for ($i = 1; $i < 200; $i++) {
+        for ($i = 1; $i < 252; $i++) {
             $file = file_get_contents("https://pokeapi.co/api/v2/pokemon/$i");
             $pkmn = json_decode($file, true);
             $name = $pkmn['name'];

@@ -17,7 +17,7 @@
             <?php   
             foreach($pkmn as $pokemon){
                 echo "<tr>";
-                echo "<td> $pokemon->id </td>";
+                echo "<td> $pokemon->pokemon_id </td>";
                 echo "<td> $pokemon->name </td>";
                 echo "<td> <img src='$pokemon->path' alt='alternatetext'> </td>";
                 //echo "<td> <img src='https://www.pokepedia.fr/images/1/1c/Miniature_Type_Combat_EB.png' alt='alternatetext'> </td>"; //Display an image of the type for best readability

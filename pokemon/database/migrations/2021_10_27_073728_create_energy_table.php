@@ -17,6 +17,7 @@ class CreateEnergyTable extends Migration
             $table->id('energy_id');
             $table->string('name');
             $table->string('path');
+            $table->string('icon');
             $table->timestamps();
         });
     }
