@@ -39,15 +39,13 @@ Route::get('/pokemon', function () {
 });
 
 
-Route::get('/pokemon', function () {
-    return view('hello');
-});
+Route::get('/pokemon', 'App\Http\controllers\listePokemonsController@getTable');
 
 Route::get('/route/{mot}', 'App\Http\controllers\listePokemonsController@getHello') ;
 
-Route::get('/pokemon', function () {
+/*Route::get('/pokemon', function () {
     return view('listepokemons');
-});
+});*/
 
 /*
 Route::get('/', function () {

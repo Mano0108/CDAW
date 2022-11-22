@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <title>Hello</title>
-    </head>
+<html>
 
-    <body>
-        <h1> Hello World <h1>
-        <br>
-        <?PHP
-            echo $mot
-        ?>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>Hello</title>
+</head>
+
+<body>
+    <h1> Hello World <h1>
+            <br>
+<?php 
+    foreach ($pkmn as $pokemon) {
+        echo "$pokemon->id <br>" ;
+    } ?>
+</body>
+
+</html>
