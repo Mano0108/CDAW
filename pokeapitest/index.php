@@ -9,7 +9,6 @@
     <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
-            console.log("start");
             $('#pokemon').DataTable();
         });
     </script>
@@ -32,20 +31,28 @@
     <tbody>';
     for ($i = 1; $i < 20; $i++) {
         $file = file_get_contents("https://pokeapi.co/api/v2/pokemon/$i");
+        
+        /*$curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://pokeapi.co/api/v2/pokemon/$i",
+            CURLOPT_RETURNTRANSFER => true
+        ));
+        $file = curl_exec($curl);*/
+        
         $pkmn = json_decode($file, true);
         $name = $pkmn['name'];
         $image = $pkmn['sprites']['front_default'];
+        $energy = $pkmn['types']['0']['type']['name'];
 
-        echo
-            "   <tr>
-        <td> $i </td>
-        <td> $name </td>
-        <td> <img src='$image' alt='alternatetext'> </td>
-    </tr>";
-    }
-    echo
-        '   </tbody>
-    </table>';
+       echo
+           "   <tr>
+       <td> $i </td>
+       <td> $name </td>
+       <td> <img src='$image' alt='alternatetext'> </td>
+   </tr>";   }
+   echo
+       '   </tbody>
+   </table>';
     ?>
 </body>
 
