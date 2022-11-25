@@ -8,7 +8,7 @@ use App\Models\Pokemon;
 class listePokemonsController extends Controller
 {
     public function getTable(){
-        $pokemon = Pokemon::GetAll();
+        $pokemon = Pokemon::getAll();
         return view('datatables_pokemons', ['pkmn' => $pokemon]);
     }
 

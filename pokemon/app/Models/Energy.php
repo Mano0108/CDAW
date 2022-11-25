@@ -15,6 +15,12 @@ class Energy extends Model
      * @var string
      */
     protected $table = 'energy';
+    protected $primaryKey = 'energy_id';
+
+    public function pokemons()
+    {
+        return $this->belongsToMany(Pokemon::class, 'pokemon_energy', 'FK_energy', 'FK_pokemon', 'energy_id', 'pokemon_id' );
+    }
 
     public function Serialize()
     {

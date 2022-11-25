@@ -30,6 +30,14 @@ Route::get('/pokemon/test/{pokemon_id}', function (Pokemon $pokemon_id) {
     ]);
 });
 
+Route::get('/pokemon/test2/{pokemon_id}', function (int $pokemon_id) {
+    $pokemon = Pokemon::find($pokemon_id);
+    foreach($pokemon->energies as $energy){
+        return $energy;
+    }
+    return $pokemon;
+});
+
 Route::get('/pokemon/test', function (Request $request) {
     dump($request);
     return new Illuminate\Http\JsonResponse([

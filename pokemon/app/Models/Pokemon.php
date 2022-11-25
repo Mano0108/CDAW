@@ -14,8 +14,16 @@ class Pokemon extends Model
      */
     protected $table = 'pokemon';
 
-    public static function GetAll(){
-        return Pokemon::all();
+    protected $primaryKey = 'pokemon_id';
+
+    public function energies()
+    {
+        return $this->belongsToMany(Energy::class, 'pokemon_energy', 'FK_pokemon', 'FK_energy', 'pokemon_id', 'energy_id');
+    }
+
+
+    public static function getAll(){
+        return Pokemon::with('energies')->get();
     }
 
     /**

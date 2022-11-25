@@ -16,11 +16,11 @@ class PokemonEnergy extends Model
 
     public function Serialize()
     {
-        return 
-        [
-            'energy_id'   => $this->FK_energy,
-            'pokemon_id' => $this->FK_pokemon,
-        ];
+        return
+            [
+                'energy_id' => $this->FK_energy,
+                'pokemon_id' => $this->FK_pokemon,
+            ];
     }
 
     use HasFactory;
