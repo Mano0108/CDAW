@@ -5,25 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Energy extends Model
+class PokemonEnergy extends Model
 {
-    use HasFactory;
-
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'energy';
+    protected $table = 'pokemon_energy';
 
     public function Serialize()
     {
         return 
         [
-            'energy_id'   => $this->energy_id,
-            'name' => $this->name,
-            'path' => $this->path,
-            'icon' => $this->icon
+            'energy_id'   => $this->FK_energy,
+            'pokemon_id' => $this->FK_pokemon,
         ];
     }
+
+    use HasFactory;
 }

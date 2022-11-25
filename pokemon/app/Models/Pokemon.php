@@ -17,6 +17,32 @@ class Pokemon extends Model
     public static function GetAll(){
         return Pokemon::all();
     }
+
+    /**
+     * The pokemon associated with the id.
+     * return a Pokemon
+     *
+     * @param integer
+     * @return \App\Models\Pokemon
+     */
+    public static function getByID($id){
+        return Pokemon::where('pokemon_id', $id);
+    }
     use HasFactory;
+
+    public function Serialize()
+    {
+        return 
+        [
+            'id'   => $this->pokemon_id,
+            'name' => $this->name,
+            'pv_max' => $this->pv_max,
+            'attack' => $this->attack,
+            'special_attack' => $this->special_attack,
+            'special_defense' => $this->special_defense,
+            'level' => $this->level,
+            'path' => $this->path,
+        ];
+    }
 
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PokemonEnergy;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,10 +27,6 @@ Route::get('/pokemon/prenom/{prenom}/nom/{nom}', function ($prenom, $nom) {
     return 'User: '.$prenom . ' ' . $nom;
 });
 
-Route::get('/pokemon/{title}', function ($title) {
-    return $title ;
-});
-
 Route::get('/pokemon', function () {
     echo "<h1> Hello World</h1>";
 });
@@ -43,9 +40,20 @@ Route::get('/pokemon', 'App\Http\controllers\listePokemonsController@getTable');
 
 Route::get('/route/{mot}', 'App\Http\controllers\listePokemonsController@getHello') ;
 
+Route::get('/energy/{FK_pokemon}', function ($FK_pokemon) {
+    $a = PokemonEnergy::where('FK_pokemon', $FK_pokemon)->get();
+    foreach ($a as $energy){
+        echo $energy->FK_energy . "\n";
+    }
+});
+
 /*Route::get('/pokemon', function () {
     return view('listepokemons');
 });*/
+
+Route::get('/form', function () {
+    return view('form');
+});
 
 Route::get('/', function () {
     return view('hello');

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html>
 
-<head>
+<head lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,16 +12,17 @@
 
     <script src="//code.jquery.com/jquery-3.5.1.js"></script>
     <script>
-        "use strict";
-        $(document).ready(function () {
-            $('input').on("change", function (e) {
-                console.log(e.target);
-            });
-            $('#form1').on("submit", function (e) {
-                console.log(e.currentTarget.elements[0].value);
-            });
+    "use strict";
+
+    $(document).ready(function () {
+        $('input').on("change", function (e) {
+            console.log(e.target);
         });
-    </script>
+        
+        $('#form1').on("submit", function (e) {
+            fetch('https://api.github.com/repos/ceri-num/uv-cdaw/commits');
+        });
+    });</script>
 </head>
 
 <body>
@@ -36,7 +37,7 @@
         </div>
         <div>
             <label for="msg">Password&nbsp;:</label>
-            <input id="msg" name="user_message"></input>
+            <input id="msg" name="user_message">
         </div>
         <div class="button">
             <input type="submit">
