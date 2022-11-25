@@ -1,31 +1,10 @@
-<!DOCTYPE html>
-<html>
+@extends('template')
 
-<head lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@section('style')
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+@endsection
 
-    <title>Laravel</title>
-
-    <!-- Styles -->
-    <!-- <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">-->
-
-    <script src="//code.jquery.com/jquery-3.5.1.js"></script>
-    <script>
-    "use strict";
-
-    $(document).ready(function () {
-        $('input').on("change", function (e) {
-            console.log(e.target);
-        });
-        
-        $('#form1').on("submit", function (e) {
-            fetch('https://api.github.com/repos/ceri-num/uv-cdaw/commits');
-        });
-    });</script>
-</head>
-
-<body>
+<div class="container mt-4">
     <form id="form1">
         <div>
             <label for="name">Nom :</label>
@@ -40,9 +19,23 @@
             <input id="msg" name="user_message">
         </div>
         <div class="button">
-            <input type="submit">
+            <input type="submit" value="Submit">
         </div>
     </form>
-</body>
+</div>
 
-</html>
+@section('script')
+    <script>
+        "use strict";
+
+        $(document).ready(function() {
+            $('input').on("change", function(e) {
+                console.log(e.target.value);
+            });
+
+            $('#form1').on("submit", function(e) {
+                console.log(e.target);
+            });
+        });
+    </script>
+@endsection

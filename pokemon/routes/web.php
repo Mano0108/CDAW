@@ -52,7 +52,7 @@ Route::get('/energy/{FK_pokemon}', function ($FK_pokemon) {
 });*/
 
 Route::get('/form', function () {
-    return view('form');
+    return view('form2');
 });
 
 Route::get('/', function () {
