@@ -16,4 +16,14 @@ In order to set up the database on your server :
   ```
   php artisan db:seed --class=PokemonSeeder
   ```
-3.
+## Workflow
+
+1. <del>pokedex avec data Tables</del>
+2. Form pour login
+3. Form pour créer un compte
+4. Main Menu (fight) pour un user loggé basique permettant de lancer un combat
+5. Habillage du main menu (fight)
+6. Création du mode de combat random
+7. Création du mode de combat draft
+8. Création du mode de combat ranked
+9. Implémentation des boutons de la toolbar et de leur page respective
