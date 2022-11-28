@@ -14,10 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/pokemon', function () {
-    return view('template');
+//currently helps for creation of the form
+Route::get('/form', function () {
+    return view('form2');
 });
 
+//Main project route, return the pokedex
+Route::get('/pokemon', 'App\Http\controllers\listePokemonsController@getTable');
+
+//Useless routes but helpful syntax tool
+/*
 Route::get('/pokemon/titre', function () {
     echo "<!doctype html><html lang='fr'><head><meta charset='UTF-8'><title>Mauvaise façon</title></head> <body><p>Le fichier risque d'être longggggg</p></body></html>";
 });
@@ -36,7 +42,6 @@ Route::get('/pokemon', function () {
 });
 
 
-Route::get('/pokemon', 'App\Http\controllers\listePokemonsController@getTable');
 
 Route::get('/route/{mot}', 'App\Http\controllers\listePokemonsController@getHello') ;
 
@@ -51,9 +56,7 @@ Route::get('/energy/{FK_pokemon}', function ($FK_pokemon) {
     return view('listepokemons');
 });*/
 
-Route::get('/form', function () {
-    return view('form2');
-});
+
 
 Route::get('/', function () {
     return view('hello');

@@ -7,10 +7,19 @@ use App\Models\Pokemon;
 
 class listePokemonsController extends Controller
 {
+    /**
+     * Every pokemons of pokemon table with their energy.
+     * return a collection of pokemon
+     *
+     * @param null
+     * @return \Illuminate\Contracts\View\View
+     */
     public function getTable(){
         $pokemon = Pokemon::getAll();
         return view('datatables_pokemons', ['pkmn' => $pokemon]);
     }
+
+
 
     public function getHello($mot){
         return view('hello', ['mot' => $mot]);
