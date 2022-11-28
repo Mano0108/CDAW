@@ -7,10 +7,6 @@
 <div class="container mt-4">
     <form id="form1">
         <div>
-            <label for="name">Nom :</label>
-            <input type="text" id="name" name="user_name">
-        </div>
-        <div>
             <label for="mail">e-mail&nbsp;:</label>
             <input type="email" id="mail" name="user_mail">
         </div>

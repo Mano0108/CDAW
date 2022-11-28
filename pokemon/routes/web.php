@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 //currently helps for creation of the form
 Route::get('/form', function () {
-    return view('form2');
+    return view('form');
 });
 
 //Main project route, return the pokedex
@@ -62,3 +62,7 @@ Route::get('/', function () {
     return view('hello');
 });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
