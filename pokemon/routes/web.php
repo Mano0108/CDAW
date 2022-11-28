@@ -14,13 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/?user_mail={user_mail}&password={password}', 'App\Http\controllers\authController@logUser');
+
 //currently helps for creation of the form
-Route::get('/form', function () {
+Route::get('', function () {
     return view('form');
 });
 
 //Main project route, return the pokedex
 Route::get('/pokemon', 'App\Http\controllers\listePokemonsController@getTable');
+
+Route::post('/log', 'App\Http\controllers\authController@handleForm');
+    
 
 //Useless routes but helpful syntax tool
 /*

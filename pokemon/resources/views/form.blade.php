@@ -5,16 +5,18 @@
 @endsection
 
 <div class="container mt-4">
-    <form id="form1">
+    <form method="POST" action = "/log" enctype="multipart/form-data" id="form1">
+        {{csrf_field()}}
         <div>
-            <label for="mail">e-mail&nbsp;:</label>
-            <input type="email" id="mail" name="user_mail">
+            <label for="mail">e-mail:</label>
+            <input type="textfiels" id="mail" name="user_mail">
         </div>
         <div>
-            <label for="msg">Password&nbsp;:</label>
-            <input id="msg" name="user_message">
+            <label for="msg">Password:</label>
+            <input id="msg" name="password">
         </div>
         <div class="button">
+            <input type="button" class="button_active" onclick="location.href='1.html';" />
             <input type="submit" value="Submit">
         </div>
     </form>
