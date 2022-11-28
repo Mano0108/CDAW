@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('friend', function (Blueprint $table) {
             $table->bigInteger('first_user_id')->unsigned()->index();
-            $table->foreign('first_user_id')->references('user_id')->on('user');
+            $table->foreign('first_user_id')->references('user_id')->on('users');
             $table->bigInteger('second_user_id')->unsigned()->index();
-            $table->foreign('second_user_id')->references('user_id')->on('user');
+            $table->foreign('second_user_id')->references('user_id')->on('users');
         });
     }
 

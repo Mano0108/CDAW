@@ -58,11 +58,4 @@ Route::get('/energy/{FK_pokemon}', function ($FK_pokemon) {
 
 
 
-Route::get('/', function () {
-    return view('hello');
-});
 
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
