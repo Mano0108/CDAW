@@ -19,8 +19,8 @@ In order to set up the database on your server :
 ## Workflow
 
 1. <del>pokedex avec data Tables</del>
-2. Form pour login
-3. Form pour créer un compte
+2. <del>Form pour login</del> (28/11/2022)
+3. <del>Form pour créer un compte</del> (29/11/2022)
 4. Main Menu (fight) pour un user loggé basique permettant de lancer un combat
 5. Habillage du main menu (fight)
 6. Création du mode de combat random

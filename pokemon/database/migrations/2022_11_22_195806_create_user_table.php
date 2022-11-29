@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
-            $table->integer('level');
+            $table->float('level')->default('1.0');
         });
     }
 

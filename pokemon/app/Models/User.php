@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
     ];
 
+    public $timestamps = false;
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -38,7 +40,16 @@ class User extends Authenticatable
 
     protected $primaryKey = 'user_id';
 
-    public static function isUser($user_mail, $password){
+    public static function isUser(string $user_mail, string $password){
         return User::where('email', '=', $user_mail, 'and')->where('password', '=', $password)->get();
+    }
+
+    /**
+     * return a collection of User which has a particular value in a particular field
+     * @param string $column
+     * @param string|int|float $value
+     */
+    public static function getUser(string $column, string|int|float $value){
+        return User::where($column, '=', $value)->get();
     }
 }

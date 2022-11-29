@@ -5,18 +5,28 @@
 @endsection
 
 <div class="container mt-4">
-    <form method="POST" action = "/menu" enctype="multipart/form-data" id="form1">
+    <form method="POST" action = "/signup" enctype="multipart/form-data" id="form1">
         {{csrf_field()}}
+        <div>
+            <label for="username">username:</label>
+            <input type="username" id="username" name="username" value={{$username}}>
+        </div>
         <div>
             <label for="mail">e-mail:</label>
             <input type="email" id="mail" name="user_mail" value={{$email}}>
         </div>
         <div>
-            <label for="msg">Password:</label>
-            <input id="msg" name="password" value={{$password}}>
+            <label for="password">Password:</label>
+            <input id="password" name="password" value={{$password}}>
+        </div><div>
+            <label for="confirm">Confirm Password:</label>
+            <input id="confirm" name="confirm" value={{$confirm}}>
         </div>
         <div>
-            <span style="display:{{$state}};">wrong password</span>
+            <p>You already have an account ? <a href="http://127.0.0.1:8000/"> Log in</a></p>
+        </div>
+        <div>
+            <span id='error-message'>{{$error}}</span>
         </div>
         <div class="button">
             <input type="submit" value="Submit">

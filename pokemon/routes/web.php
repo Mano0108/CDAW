@@ -16,20 +16,34 @@ use Illuminate\Support\Facades\Route;
 
 //redirect to login form
 Route::get('', function () {
-    return view('form',[
+    return view('loginForm',[
         'email' => '',
         'password' => '',
-        'state' => 'none'
+        'state' => ''
+    ]);
+});
+
+Route::get('/signup', function () {
+    return view('signupForm', [
+        'username' => '',
+        'email' => '',
+        'password' => '',
+        'confirm' => '',
+        'error' => " "
     ]);
 });
 
 //login form posts identifiants on this url
-Route::post('/menu', 'App\Http\controllers\authController@handleForm');
+Route::post('/menu', 'App\Http\controllers\authController@handleLoginForm');
+
+Route::post('/signup', 'App\Http\controllers\authController@handleSignupForm');
 
 //Main project route, return the pokedex
 Route::get('/pokemon', 'App\Http\controllers\listePokemonsController@getTable');
 
-    
+Route::get('/test', function () {
+    return view('form2');
+});
 
 //Useless routes but helpful syntax tool
 /*
