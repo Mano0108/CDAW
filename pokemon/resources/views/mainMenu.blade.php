@@ -2,4 +2,4 @@
 
 @section('content')
 
-<p>Welcome {{$user}}</p>
+<p>Welcome {{$user->name}}</p>
