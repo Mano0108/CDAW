@@ -16,7 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 //redirect to login form
 Route::get('', function () {
-    return view('form');
+    return view('form',[
+        'email' => '',
+        'password' => '',
+        'state' => 'none'
+    ]);
 });
 
 //login form posts identifiants on this url

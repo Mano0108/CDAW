@@ -38,5 +38,7 @@ class User extends Authenticatable
 
     protected $primaryKey = 'user_id';
 
-    
+    public static function isUser($user_mail, $password){
+        return User::where('email', '=', $user_mail, 'and')->where('password', '=', $password)->get();
+    }
 }

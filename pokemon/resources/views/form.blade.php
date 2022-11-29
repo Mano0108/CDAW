@@ -9,11 +9,14 @@
         {{csrf_field()}}
         <div>
             <label for="mail">e-mail:</label>
-            <input type="email" id="mail" name="user_mail">
+            <input type="email" id="mail" name="user_mail" value={{$email}}>
         </div>
         <div>
             <label for="msg">Password:</label>
-            <input id="msg" name="password">
+            <input id="msg" name="password" value={{$password}}>
+        </div>
+        <div>
+            <span style="display:{{$state}};">wrong password</span>
         </div>
         <div class="button">
             <input type="submit" value="Submit">
