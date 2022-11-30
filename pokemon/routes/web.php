@@ -14,7 +14,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//redirect to login form
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/menu', function () {
+        return view('mainMenu');
+    })->name('menu');
+});
+
+/*redirect to login form
 Route::get('', function () {
     return view('loginForm',[
         'email' => '',
@@ -83,12 +104,4 @@ Route::get('/energy/{FK_pokemon}', function ($FK_pokemon) {
 
 
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+

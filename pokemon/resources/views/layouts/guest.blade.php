@@ -11,6 +11,8 @@
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Scripts -->
+        <link rel="stylesheet" href="{{ URL::asset('css/app.css') }} " type="text/css">
+        <script>{{ URL::asset('js/app.css') }} </script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
