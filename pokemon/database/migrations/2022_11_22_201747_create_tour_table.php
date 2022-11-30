@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('FK_combat_id')->unsigned()->index();
             $table->foreign('FK_combat_id')->references('combat_id')->on('combat');
             $table->bigInteger('FK_user_id')->unsigned()->index();
-            $table->foreign('FK_user_id')->references('user_id')->on('user');
+            $table->foreign('FK_user_id')->references('id')->on('users');
             $table->bigInteger('FK_pokemon_id')->unsigned()->index();
             $table->foreign('FK_pokemon_id')->references('pokemon_id')->on('pokemon');
             $table->integer('action');
