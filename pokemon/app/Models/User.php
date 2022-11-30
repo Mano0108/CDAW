@@ -2,20 +2,26 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use HasProfilePhoto;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var string[]
      */
     protected $fillable = [
         'name',
@@ -23,33 +29,33 @@ class User extends Authenticatable
         'password',
     ];
 
-    public $timestamps = false;
-
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $hidden = [
         'password',
         'remember_token',
-        
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
-    protected $table = 'user';
-
-    protected $primaryKey = 'user_id';
-
-    public static function isUser(string $user_mail, string $password){
-        return User::where('email', '=', $user_mail, 'and')->where('password', '=', $password)->get();
-    }
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
     /**
-     * return a collection of User which has a particular value in a particular field
-     * @param string $column
-     * @param string|int|float $value
+     * The accessors to append to the model's array form.
+     *
+     * @var array
      */
-    public static function getUser(string $column, string|int|float $value){
-        return User::where($column, '=', $value)->get();
-    }
+    protected $appends = [
+        'profile_photo_url',
+    ];
 }
