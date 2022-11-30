@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 @endsection
 
+@section('content')
 <div class="container mt-4">
     <form method="POST" action = "/signup" enctype="multipart/form-data" id="form1">
         {{csrf_field()}}
@@ -33,6 +34,7 @@
         </div>
     </form>
 </div>
+@endsection
 
 @section('script')
     <script>
