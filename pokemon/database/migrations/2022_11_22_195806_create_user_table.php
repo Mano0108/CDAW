@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->float('level')->default('1.0');
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 
