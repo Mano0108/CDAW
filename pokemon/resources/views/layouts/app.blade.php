@@ -11,15 +11,15 @@
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <!-- Styles -->
         @livewireStyles
-    </head>
-    <body class="font-sans antialiased">
+        @stack('style')
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+    </head>
+    <body>
+        
+        <div>
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -29,17 +29,19 @@
                     </div>
                 </header>
             @endif
-        @if (isset($header))    
+        @if (isset($test))    
         {{ $test }}
         @endif
             <!-- Page Content -->
-            <main>
                 {{ $slot }}
-            </main>
         </div>
 
         @stack('modals')
 
         @livewireScripts
     </body>
+    <footer>
+        <script src="//code.jquery.com/jquery-3.5.1.js" ></script>
+        @stack('script')
+    </footer>
 </html>

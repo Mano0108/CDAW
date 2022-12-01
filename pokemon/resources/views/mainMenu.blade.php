@@ -1,12 +1,7 @@
 <x-app-layout>
-    <link rel="stylesheet" href="{{ URL::asset('css/gradient.css') }} " type="text/css">
+    
+    @include('tools.navbar')
 
-    <header id="nav-bar">
-        <nav>
-            <form action="/menu" method="post">
-                <input type="submit" name="upvote" value="lolilol" />
-            </form>
-        </nav>
-    </header>
-    <p>Welcome </p>
+    
+    <p>Welcome {{$user->name}}</p>
 </x-app-layout>

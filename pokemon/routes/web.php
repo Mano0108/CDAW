@@ -31,8 +31,18 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/menu', function () {
-        return view('mainMenu');
+        return view('mainMenu',[
+            'user' => auth()->user() 
+        ]);
     })->name('menu');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/menu/pokedex', 'App\Http\controllers\listePokemonsController@getTable')->name('pokedex');
 });
 
 /*redirect to login form
