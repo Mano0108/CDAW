@@ -22,7 +22,8 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');
+    }
+    )->name('dashboard');
 });
 
 Route::middleware([
@@ -31,10 +32,24 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/menu', function () {
-        return view('mainMenu',[
-            'user' => auth()->user() 
+        return view('mainMenu', [
+            'user' => auth()->user()
         ]);
-    })->name('menu');
+    }
+    )->name('menu');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/menu/replays', function () {
+        return view('mainMenu', [
+            'user' => auth()->user()
+        ]);
+    }
+    )->name('menu');
 });
 
 Route::middleware([
@@ -47,71 +62,50 @@ Route::middleware([
 
 /*redirect to login form
 Route::get('', function () {
-    return view('loginForm',[
-        'email' => '',
-        'password' => '',
-        'state' => ''
-    ]);
+return view('loginForm',[
+'email' => '',
+'password' => '',
+'state' => ''
+]);
 });
-
 Route::get('/signup', function () {
-    return view('signupForm', [
-        'username' => '',
-        'email' => '',
-        'password' => '',
-        'confirm' => '',
-        'error' => " "
-    ]);
+return view('signupForm', [
+'username' => '',
+'email' => '',
+'password' => '',
+'confirm' => '',
+'error' => " "
+]);
 });
-
 //login form posts identifiants on this url
 Route::post('/menu', 'App\Http\controllers\authController@handleLoginForm');
-
 Route::post('/signup', 'App\Http\controllers\authController@handleSignupForm');
-
 //Main project route, return the pokedex
 Route::get('/pokemon', 'App\Http\controllers\listePokemonsController@getTable');
-
 Route::get('/test', function () {
-    return view('form2');
+return view('form2');
 });
-
 //Useless routes but helpful syntax tool
 /*
 Route::get('/pokemon/titre', function () {
-    echo "<!doctype html><html lang='fr'><head><meta charset='UTF-8'><title>Mauvaise façon</title></head> <body><p>Le fichier risque d'être longggggg</p></body></html>";
+echo "<!doctype html><html lang='fr'><head><meta charset='UTF-8'><title>Mauvaise façon</title></head> <body><p>Le fichier risque d'être longggggg</p></body></html>";
 });
-
-
 Route::get('/pokemon/prenom/{prenom}/nom/{nom}', function ($prenom, $nom) {
-    return 'User: '.$prenom . ' ' . $nom;
+return 'User: '.$prenom . ' ' . $nom;
 });
-
 Route::get('/pokemon', function () {
-    echo "<h1> Hello World</h1>";
+echo "<h1> Hello World</h1>";
 });
-
 Route::get('/pokemon', function () {
-    echo "<h1> Hello World</h1>";
+echo "<h1> Hello World</h1>";
 });
-
-
-
 Route::get('/route/{mot}', 'App\Http\controllers\listePokemonsController@getHello') ;
-
 Route::get('/energy/{FK_pokemon}', function ($FK_pokemon) {
-    $a = PokemonEnergy::where('FK_pokemon', $FK_pokemon)->get();
-    foreach ($a as $energy){
-        echo $energy->FK_energy . "\n";
-    }
+$a = PokemonEnergy::where('FK_pokemon', $FK_pokemon)->get();
+foreach ($a as $energy){
+echo $energy->FK_energy . "\n";
+}
 });
-
 /*Route::get('/pokemon', function () {
-    return view('listepokemons');
+return view('listepokemons');
 });*/
-
-
-
-
-
-

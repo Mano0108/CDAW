@@ -2,25 +2,31 @@
     <link rel="stylesheet" href="{{ URL::asset('css/gradient.css') }} " type="text/css">
 @endpush
 
-<header id="header">
-    <nav>
-        <form action="/menu/pokedex" method="get">
-            @csrf
-            <input type="submit" name="upvote" value="pokedex" />
-        </form>
-    </nav>
-</header>
-
 <header class="header-container">
     <div class="separator left">
     </div>
     <div class="separator middle">
         <div class="navbar">
-            <div class="navbtn"><a href="/menu/pokedex">Pokedex</a></div>
-            <div class="navbtn"><a href="#news">News</a></div>
-            <div class="navbtn"><a href="#fight">Fight</a></div>
-            <div class="navbtn"><a href="#team">Team</a></div>
-            <div class="navbtn"><a href="#shop">Shop</a></div>
+            <div class="navbtn navbtn-border">
+                <img class="navbar-icon" src="{{URL::asset('/images/navbar/pokedex.png')}}">
+                <a href="/menu/pokedex">POKEDEX</a>
+            </div>
+            <div class="navbtn navbtn-border">
+                <img class="navbar-icon" src="{{URL::asset('/images/navbar/replays.png')}}">
+                <a href="/menu/replays">REPLAYS</a>
+            </div>
+            <div class="navbtn navbtn-border">
+                <img class="navbar-icon" src="{{URL::asset('images/navbar/fight.png')}}">
+                <a href="/menu/fight">FIGHT</a>
+            </div>
+            <div class="navbtn navbtn-border">
+                <img class="navbar-icon" src="{{URL::asset('images/navbar/team.png')}}">
+                <a href="/menu/team">TEAM</a>
+            </div>
+            <div class="navbtn">
+                <img class="navbar-icon" src="{{URL::asset('/images/navbar/info-64.png')}}">
+                <a href="/menu">INFO</a>
+            </div>
         </div>
     </div>
     <div class="separator right">

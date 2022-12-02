@@ -13,10 +13,7 @@
 @endpush
 
 @include('tools.navbar')
-
-    <h1> Exercice PokeAPI</h1>
-    <br>
-    <br>
+<br>
     <table id="pokemon">
         <thead>
             <tr>
