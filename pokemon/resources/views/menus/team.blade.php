@@ -5,5 +5,5 @@
 
     <p>Welcome {{$user->name}}</p>
     <br>
-    <p>You are on the info menu</p>
+    <p>You are on the team menu</p>
 </x-app-layout>

@@ -15,16 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    }
-    )->name('dashboard');
-});
 
 Route::middleware([
     'auth:sanctum',
@@ -32,11 +22,11 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/menu', function () {
-        return view('mainMenu', [
+        return view('menus.info', [
             'user' => auth()->user()
         ]);
     }
-    )->name('menu');
+    )->name('menu-info');
 });
 
 Route::middleware([
@@ -45,11 +35,11 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/menu/replays', function () {
-        return view('mainMenu', [
+        return view('menus.replays', [
             'user' => auth()->user()
         ]);
     }
-    )->name('menu');
+    )->name('menu-replays');
 });
 
 Route::middleware([
@@ -57,7 +47,33 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/menu/pokedex', 'App\Http\controllers\listePokemonsController@getTable')->name('pokedex');
+    Route::get('/menu/team', function () {
+        return view('menus.team', [
+            'user' => auth()->user()
+        ]);
+    }
+    )->name('menu-team');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/menu/fight', function () {
+        return view('menus.fight', [
+            'user' => auth()->user()
+        ]);
+    }
+    )->name('menu-fight');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/menu/pokedex', 'App\Http\controllers\listePokemonsController@getTable')->name('menu-pokedex');
 });
 
 /*redirect to login form
@@ -109,3 +125,15 @@ echo $energy->FK_energy . "\n";
 /*Route::get('/pokemon', function () {
 return view('listepokemons');
 });*/
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    }
+    )->name('dashboard');
+});
