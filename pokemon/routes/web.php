@@ -76,6 +76,10 @@ Route::middleware([
     Route::get('/menu/pokedex', 'App\Http\controllers\listePokemonsController@getTable')->name('menu-pokedex');
 });
 
+Route::get('/signup', function () {
+    return view('auth.register');
+    });
+
 /*redirect to login form
 Route::get('', function () {
 return view('loginForm',[
