@@ -26,6 +26,11 @@ class Pokemon extends Model
         return Pokemon::with('energies')->get();
     }
 
+    public static function getUserPokemon($user_id){
+        $user = User::with('energies')->find($user_id);
+        return Pokemon::where('level', "<=", $user->level )->get();
+    }
+
     /**
      * The pokemon associated with the id.
      * return a Pokemon

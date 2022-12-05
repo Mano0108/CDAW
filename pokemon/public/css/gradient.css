@@ -4,7 +4,6 @@ body {
     */
     background-color: rgba(200,200,200,1); 
     height: 100%;
-    margin: 0;
 }
 
 /********************************SÉPARATION DU HEADER**********************************************************/
@@ -115,6 +114,11 @@ body {
     text-decoration: none;
     display: block;
     text-align: left;
+}
+
+#connected{
+    margin-bottom: -4px;
+    margin-right: 10px;
 }
 
 

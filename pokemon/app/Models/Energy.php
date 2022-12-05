@@ -22,6 +22,11 @@ class Energy extends Model
         return $this->belongsToMany(Pokemon::class, 'pokemon_energy', 'FK_energy', 'FK_pokemon', 'energy_id', 'pokemon_id' );
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_energy', 'FK_energy', 'FK_user', 'energy_id', 'id' );
+    }
+
     public function Serialize()
     {
         return 

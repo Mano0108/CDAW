@@ -18,8 +18,7 @@ return new class extends Migration
             $table->foreign('FK_energy')->references('energy_id')->on('energy');
             $table->bigInteger('FK_user')->unsigned()->index();
             $table->foreign('FK_user')->references('id')->on('users');
-            //$table->foreignId('energy_id')->constrained('energy');
-            //$table->foreignId('user_id')->constrained('user');
+            $table->primary(['FK_energy', 'FK_user']);
         });
     }
 
