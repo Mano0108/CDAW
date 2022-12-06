@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('combat', function (Blueprint $table) {
             $table->id('combat_id');
+            $table->bigInteger('winner_id');
+            $table->bigInteger('loser_id');
+            $table->string('pokemons_winner');
         });
     }
 

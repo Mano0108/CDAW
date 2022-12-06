@@ -1,0 +1,69 @@
+.mode-container{
+
+    width: 33.3%;
+}
+
+.mode-img{
+    background-color: grey;
+
+    width: 300px;
+    height: 200px;
+
+    margin-top: 50px;
+
+    margin-left: 50%;
+    translate: -50%;
+}
+
+.mode-desc{
+    margin-left: 50%;
+    translate: -50%;
+
+    width: 300px;
+    height: 75px;
+}
+
+.fight-btn-container{
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+    height: 100px;
+
+    margin-top: 100px;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.fight-btn{
+    background-color: grey;
+    border-radius: 15px;
+
+    margin: 10px;
+}
+
+.vr{
+    border-right: solid;
+    border-color: red;
+
+    height: 350px;
+
+    margin-top: 200px;
+}
+
+
+#main-container{
+    display: flex;
+    justify-content: left;
+
+    background-color: #C0F3EA;
+
+    margin-top: 75px;
+    margin-left: 50%;
+    translate: -50%;
+
+    width: 1200px;
+    height: 600px;
+}
+

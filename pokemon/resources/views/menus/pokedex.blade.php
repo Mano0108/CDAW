@@ -36,8 +36,6 @@
                             <tr>
                                 <td>
                                     <img src={{ $energy->path }} alt="{{ $energy->name }}" width="110" height="26">
-                                </td>
-                                <td>
                                     <span style="display:none;">{{ $energy->name }}</span>
                                 </td>
                             </tr>

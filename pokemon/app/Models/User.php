@@ -108,15 +108,6 @@ class User extends Authenticatable
 
         $pokemon_user = Pokemon::with('energies')->whereIn('pokemon_id', $pokemon_list)->get();
         return $pokemon_user;
-        /*
-        return DB::table('users')
-        ->selectRaw('pokemon.name, pokemon.path, count(pokemon_energy.FK_pokemon) AS nb_user')
-        ->join("user_energy", 'user_energy.FK_user', '=', "users.id",'')
-        ->join("energy", 'user_energy.FK_energy', '=', "energy.energy_id",'')
-        ->join("pokemon_energy", 'pokemon_energy.FK_energy', '=', "energy.energy_id",'')
-        ->join("pokemon", 'pokemon_energy.FK_pokemon', '=', "pokemon.pokemon_id",'')
-        ->where('users.id', "=", $user_id)
-        ->groupByRaw('pokemon_energy.FK_pokemon')->get();*/
     }
 
 }
