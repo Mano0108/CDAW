@@ -92,6 +92,10 @@ Route::get('/signup', function () {
     return view('auth.register');
     });
 
+Route::get('', function () {
+    return view('auth.login');
+    });
+
 /*redirect to login form
 Route::get('', function () {
 return view('loginForm',[
