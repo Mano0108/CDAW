@@ -35,7 +35,7 @@ class PokemonSeeder extends Seeder
                 'special_attack' => $specialAttack,
                 'special_defense' => $specialDefense,
                 'level' => $level,
-                'sprite' => "https://img.pokemondb.net/artwork/large/$name.jpg",
+                'sprite' => "https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/$name.png",
                 'path' => $image
                ]);
 
