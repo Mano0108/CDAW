@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('special_attack');
             $table->integer('special_defense');
             $table->integer('level');
+            $table->string('sprite');
             $table->string('path');
         });
     }
