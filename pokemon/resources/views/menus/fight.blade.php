@@ -15,7 +15,7 @@
             </div>
             <div class="fight-btn-container">
                 <button class="fight-btn">
-                    <form class="fight-form" method="POST" action="{{ route('logout') }}" x-data>
+                    <form class="fight-form" method="POST" action="/fighting" x-data>
                         @csrf
                         <input id="logout" type="submit" value="FRIEND">
                     </form>
