@@ -14,7 +14,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {  
+    Route::post('/draft', 'App\Http\controllers\fightController@handleDraft')->name('handle-draft');
+});
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {  
+    Route::post('/fight', 'App\Http\controllers\fightController@handleFight')->name('handle-fight');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {  
+    Route::post('/fighting', 'App\Http\controllers\fightController@createLobby')->name('create-fight');
+});
 
 Route::middleware([
     'auth:sanctum',

@@ -14,18 +14,14 @@
                 <p>Select your team of three pokemons, and fight against your opponent for fun. (No classement)</p>
             </div>
             <div class="fight-btn-container">
-                <button class="fight-btn">
-                    <form class="fight-form" method="POST" action="/fighting" x-data>
-                        @csrf
-                        <input id="logout" type="submit" value="FRIEND">
-                    </form>
-                </button>
-                <button class="fight-btn">
-                    <form class="fight-form" method="POST" action="{{ route('logout') }}" x-data>
-                        @csrf
-                        <input id="logout" type="submit" value="RANDOM">
-                    </form>
-                </button>
+                <form class="fight-form" method="POST" action="/fighting" x-data>
+                    @csrf
+                    <button class="fight-btn" name="mode" value="skirmish">RANDOM</button>
+                </form>
+                <form class="fight-form" method="POST" action="/friends-selection" x-data>
+                    @csrf
+                    <button class="fight-btn" name="mode" value="skirmish">FRIENDS</button>
+                </form>
             </div>
         </div>
         <div class="vr"></div>
@@ -36,10 +32,10 @@
                     for LPs.</p>
             </div>
             <div class="fight-btn-container">
-                    <form class="fight-btn" method="POST" action="{{ route('logout') }}" x-data>
-                        @csrf
-                        <input id="logout" type="submit" value="RANDOM">
-                    </form>
+                <form class="fight-form" method="POST" action="/friends-selection" x-data>
+                    @csrf
+                    <button class="fight-btn" name="mode" value="skirmish">RANDOM</button>
+                </form>
             </div>
         </div>
         <div class="vr"></div>
@@ -50,18 +46,14 @@
                     one you unlocked)</p>
             </div>
             <div class="fight-btn-container">
-                <button class="fight-btn">
-                    <form class="fight-form" method="POST" action="{{ route('logout') }}" x-data>
-                        @csrf
-                        <input id="logout" type="submit" value="FRIEND">
-                    </form>
-                </button>
-                <button class="fight-btn">
-                    <form class="fight-form" method="POST" action="{{ route('logout') }}" x-data>
-                        @csrf
-                        <input id="logout" type="submit" value="RANDOM">
-                    </form>
-                </button>
+                <form class="fight-form" method="POST" action="/fighting" x-data>
+                    @csrf
+                    <button class="fight-btn" name="mode" value="blind">RANDOM</button>
+                </form>
+                <form class="fight-form" method="POST" action="/friends-selection" x-data>
+                    @csrf
+                    <button class="fight-btn" name="mode" value="blind">FRIENDS</button>
+                </form>
             </div>
         </div>
     </div>

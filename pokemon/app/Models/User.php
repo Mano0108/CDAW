@@ -84,8 +84,10 @@ class User extends Authenticatable
             ->first();
     }
 
-    public static function getUsersPokemons($user_id, $user_level)
+    public static function getUsersPokemons($user_id)
     {
+        $user_level = User::find($user_id)->level;
+
         $pokemons = DB::select("SELECT pokemon.pokemon_id, COUNT(pokemon_energy.FK_pokemon) AS nb_user, A.nb_energy_pokemon 
         FROM pokemon
             JOIN user_energy ON user_energy.FK_user = '$user_id' 

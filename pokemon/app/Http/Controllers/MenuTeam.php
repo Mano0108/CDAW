@@ -16,7 +16,7 @@ class MenuTeam extends Controller
     public function __invoke(Request $request)
     {
         $user = auth()->user();
-        $pokemons_user = User::getUsersPokemons($user->id, $user->level);
+        $pokemons_user = User::getUsersPokemons($user->id);
         return view('menus.team', ['pkmn' => $pokemons_user, 'user'=>auth()->user()]);
     }
 }

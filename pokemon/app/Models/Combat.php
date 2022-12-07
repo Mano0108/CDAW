@@ -11,4 +11,16 @@ class Combat extends Model
 
     protected $table = 'combat';
     protected $primaryKey = 'combat_id';
+    public $timestamps = false;
+    protected $fillable = [
+        'user1_id',
+        'user2_id'
+    ];
+
+    public static function findOpponent($user_id){
+        $opponents = User::where("id", '!=', $user_id)->get();
+        $nb_opponents = count($opponents);
+        $opponent_index = rand(0, $nb_opponents -1);
+        return $opponents[$opponent_index];
+    }
 }
