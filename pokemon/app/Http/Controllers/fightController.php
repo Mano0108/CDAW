@@ -51,7 +51,7 @@ class fightController extends Controller
         
             //A remplacer par une requete avec un count dans l'ideal
         $draft = Tour::getDraft($request->lobby);
-        if(count($draft)<6){
+        if(false/*count($draft)<6*/){
 
             return view("combat.draft", [
                 'pkmn' => User::getUsersPokemons($request->opponent),
@@ -61,6 +61,10 @@ class fightController extends Controller
         }
         return view("combat.action", [
             'object' => $request]);
+    }
+
+    public function handleCombat(Request $request){
+        return view('combat.action');
     }
 
 }

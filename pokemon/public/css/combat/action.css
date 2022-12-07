@@ -1,0 +1,63 @@
+#instruction-container{
+    display: flex;
+    justify-content: left;
+
+    margin-left: 50%;
+    translate: -50%;
+
+    width: 1200px;
+}
+
+#main-container{
+    flex-direction: column;
+
+    background-color: #C0F3EA;
+
+    margin-top: 50px;
+    margin-left: 50%;
+    translate: -50%;
+
+    width: 1041px;
+    height: 600px;
+}
+
+.user-container{
+    display: flex;
+    justify-content: left;
+
+    height: 35%;
+    width: 100%;
+
+    margin: 0px;
+}
+
+.pkmn-free-space{
+    width: 500px;
+    height: 100%;
+}
+
+.pkmn-hud{
+width: 43%;
+height: 60%;
+
+background: #EBAE39;
+border-radius: 30px;
+
+margin-top: 42px;
+}
+
+.pkmn-image{
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.pkmn-image img{
+    height: 210px;
+    width: 210px;
+}
+
+#hub-container{
+    background-color: #D9D9D9;
+
+    height: 30%;
+}
