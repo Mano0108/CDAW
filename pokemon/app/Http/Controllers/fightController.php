@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Combat;
 use App\Models\User;
 use App\Models\Tour;
+use App\Models\Pokemon;
 
 class fightController extends Controller
 {
@@ -35,10 +36,22 @@ class fightController extends Controller
             'lobby_id' => $lastValue]);
     }
 
+    public function createCombatData($combat_id){
+        $data = Combat::find($combat_id);
+        $data->draft = Tour::getDraft($combat_id);
+        $data->users = User::whereIn('id', [$data->user1_id, $data->user2_id])->get();
+        $data->pokemon_user_1 = Pokemon::find($data->draft['0']['FK_pokemon_id']);
+        $data->pokemon_user_2 = Pokemon::find($data->draft['1']['FK_pokemon_id']);
+        $data->current_turn = 0;
+        return $data;
+    }
+
     public function handleFight(Request $request)
     {
+        $data = json_decode($request->data, true);
+        //return $data;
         return view("combat.action", [
-            'object' => $request]);
+            'data' => $data]);
     }
 
     public function handleDraft(Request $request)
@@ -51,7 +64,7 @@ class fightController extends Controller
         
             //A remplacer par une requete avec un count dans l'ideal
         $draft = Tour::getDraft($request->lobby);
-        if(false/*count($draft)<6*/){
+        if(count($draft)<6){
 
             return view("combat.draft", [
                 'pkmn' => User::getUsersPokemons($request->opponent),
@@ -59,8 +72,10 @@ class fightController extends Controller
                 'current_user_id' => $request->opponent,
                 'opponent_id' => $request->user]);
         }
+        $data = $this->createCombatData($request->lobby);
+        $data->lobby = $request->lobby;
         return view("combat.action", [
-            'object' => $request]);
+            'data' => $data]);
     }
 
     public function handleCombat(Request $request){

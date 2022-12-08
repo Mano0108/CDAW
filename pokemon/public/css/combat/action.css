@@ -107,7 +107,17 @@ margin-top: 42px;
     height: 50px;
     border-radius: 25px;
     background-color: #909090;
+    font-size: 20px;
+    border-style: hidden;
 
     margin-left: 50%;
     translate: -50%;
+}
+
+.fight-btn:hover{
+    background-color: white;
+}
+
+#quit-btn:hover{
+    background-color: red;
 }

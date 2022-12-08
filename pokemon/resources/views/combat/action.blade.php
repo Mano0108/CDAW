@@ -5,38 +5,39 @@
     @endpush
 
     <div id="instruction-container">
-        <p>LOBBY : {{ $object->lobby }}</p>
-        <p>user 1 : {{ $object->user1 }}</p>
-        <p>user 2 : {{ $object->user2 }}</p>
+        <p>LOBBY : {{ $data['lobby'] }}</p>
+        <p>user 1 : {{ $data['users']['0']['name']}}</p>
+        <p>user 2 : {{$data['users']['1']['name'] }}</p>
     </div>
     <div id="main-container">
         <div class="user-container">
             <div class="pkmn-free-space"></div>
             <div class="pkmn-hud"></div>
             <div class="pkmn-image">
-                <img src="https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/charizard.png"
+                <img src="https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/{{$data['pokemon_user_2']['name']}}.png"
                     alt="">
             </div>
         </div>
         <div class="user-container">
             <div class="pkmn-image">
                 <img id="current-user-pkmn"
-                    src="https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/pikachu.png">
+                    src="https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/{{$data['pokemon_user_1']['name']}}.png">
             </div>
             <div class="pkmn-hud"></div>
             <div class="pkmn-free-space"></div>
         </div>
         <div id="hub-container">
             <div id="dialog-container">
-                <p>What will CHARMELEON do ?</p>
+                @if($data['current_turn'] == 0)
+                    <p>What will {{$data['pokemon_user_1']['name']}} do ?</p>
+                @else
+                    <p>What will {{$data['pokemon_user_2']['name']}} do ?</p>
+                @endif
             </div>
             <div id="user-option-container">
                 <form class="fight-form" method="POST" action="/fight" x-data>
                     @csrf
-                    <input type="hidden" name="user1" value="user1_name" readonly>
-                    <input type="hidden" name="user2" value="user2_name" readonly>
-                    <input type="hidden" name="lobby" value="{{ $object->lobby }}" readonly>
-                    <input type="hidden" name="user1_pokemon" value="{{ $object->user1_pokemon }}" readonly>
+                    <input type="hidden" name="data" value="{{json_encode($data)}}" readonly>
                     <table id="btn-container">
                         <tbody>
                             <tr>
@@ -45,7 +46,7 @@
                             </tr>
                             <tr>
                                 <td><button class="fight-btn" name="action" value="3">DEFENSE</button></td>
-                                <td><button class="fight-btn" name="action" value="logout">QUIT</button></td>
+                                <td><button id="quit-btn" class="fight-btn" name="action" value="logout">QUIT</button></td>
                             </tr>
                         </tbody>
                     </table>
