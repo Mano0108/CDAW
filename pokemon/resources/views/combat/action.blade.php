@@ -14,7 +14,7 @@
             <div class="pkmn-free-space"></div>
             <div class="pkmn-hud">
                 <p>{{$data['pokemon_user']['1']['name']}}</p><br>
-                <p>HP : {{$data['users_hp']['1']}} / {{$data['pokemon_user']['0']['pv_max']}}</p>
+                <p>HP : {{$data['users_hp']['1']}} / {{$data['pokemon_user']['1']['pv_max']}}</p>
             </div>
             <div class="pkmn-image">
                 <img src="https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/{{$data['pokemon_user']['1']['name']}}.png"

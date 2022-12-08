@@ -49,6 +49,35 @@ class fightController extends Controller
         return $data;
     }
 
+    public function handleDraft(Request $request)
+    {
+        Tour::create([
+            'FK_combat_id' => $request->lobby,
+            'FK_user_id' => $request->user,
+            'FK_pokemon_id' => $request->pokemon,
+            'action' => 0
+        ]);
+
+        //A remplacer par une requete avec un count dans l'ideal
+        $draft = Tour::getDraft($request->lobby);
+        if (count($draft) < 6) {
+        //Si la draft est en cours on renvoit la vue de draft
+            return view("combat.draft", [
+                'pkmn' => User::getUsersPokemons($request->opponent),
+                'lobby_id' => $request->lobby,
+                'current_user_id' => $request->opponent,
+                'opponent_id' => $request->user
+            ]);
+        }
+        //Sinon on renvoit la vue de combat (action.blade.php)
+        $data = $this->createCombatData($request->lobby);
+        $data->lobby = $request->lobby;
+        //return $data;
+        return view("combat.action", [
+            'data' => $data
+        ]);
+    }
+
     public function handleFight(Request $request)
     {
         $data = json_decode($request->data, true);
@@ -63,6 +92,9 @@ class fightController extends Controller
             $data['current_turn'] = 1;
         }
         else{
+            //Application des degats = Actualisation des statistiques des pokemons
+            $data = $this->applyDamage($data);
+            //return $data;
             $data['current_turn'] = 0;
         }
         //return $data;
@@ -71,37 +103,34 @@ class fightController extends Controller
         ]);
     }
 
-    public function handleDraft(Request $request)
-    {
-        Tour::create([
-            'FK_combat_id' => $request->lobby,
-            'FK_user_id' => $request->user,
-            'FK_pokemon_id' => $request->pokemon,
-            'action' => 0
-        ]);
-
-        //A remplacer par une requete avec un count dans l'ideal
-        $draft = Tour::getDraft($request->lobby);
-        if (count($draft) < 6) {
-
-            return view("combat.draft", [
-                'pkmn' => User::getUsersPokemons($request->opponent),
-                'lobby_id' => $request->lobby,
-                'current_user_id' => $request->opponent,
-                'opponent_id' => $request->user
-            ]);
-        }
-        $data = $this->createCombatData($request->lobby);
-        $data->lobby = $request->lobby;
-        //return $data;
-        return view("combat.action", [
-            'data' => $data
-        ]);
-    }
+    
 
     public function handleCombat(Request $request)
     {
         return view('combat.action');
     }
 
+
+    private function applyDamage($data){
+        $tmp = Tour::getLastTurn($data['lobby']);
+        $actions = [$tmp[1], $tmp[0]];
+        $damage_applied = [0, 0];
+        for($ii = 0; $ii<=1; $ii++){
+            if($actions[$ii]['action'] == 1){
+                $damage_applied[$ii] = $data['pokemon_user'][$ii]['attack'];
+            }
+            elseif($actions[$ii]['action'] == 2){
+                $damage_applied[$ii] = $data['pokemon_user'][$ii]['special_attack'];
+            }
+        }
+        if($actions[0]['action'] == 3){
+            $damage_applied[1] = max(0, $damage_applied[1] - $data['pokemon_user'][0]['special_defense']);
+        }
+        if($actions[1]['action'] == 3){
+            $damage_applied[0] = max(0, $damage_applied[0] - $data['pokemon_user'][1]['special_defense']);
+        }
+        $data['users_hp']['0'] = $data['users_hp']['0'] - $damage_applied[1];
+        $data['users_hp']['1'] = $data['users_hp']['1'] - $damage_applied[0];
+        return $data;
+    }
 }

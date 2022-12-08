@@ -22,4 +22,8 @@ class Tour extends Model
     public static function getDraft($combat_id){
         return Tour::where('FK_combat_id', '=', $combat_id, "AND")->where('action', '=', 0)->get();
     }
+
+    public static function getLastTurn($combat_id){
+        return Tour::select('action')->where('FK_combat_id', '=', $combat_id,)->orderBy('created_at', 'desc')->take(2)->get();
+    }
 }
