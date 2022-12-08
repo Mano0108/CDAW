@@ -24,24 +24,27 @@ class fightController extends Controller
         Combat::create(['user1_id' => $tmp[0], 'user2_id' => $tmp[1]]);
 
         $lastValue = DB::table('combat')->orderBy('combat_id', 'desc')->first()->combat_id;
-        if($request->mode == "skirmish"){
+        if ($request->mode == "skirmish") {
             return view("combat.draft", [
                 'pkmn' => User::getUsersPokemons($tmp[0]),
                 'lobby_id' => $lastValue,
                 'current_user_id' => $tmp[0],
-                'opponent_id' => $tmp[1]]);
+                'opponent_id' => $tmp[1]
+            ]);
         }
         return view("combat.lobby", [
             'mode' => $request->mode,
-            'lobby_id' => $lastValue]);
+            'lobby_id' => $lastValue
+        ]);
     }
 
-    public function createCombatData($combat_id){
+    public function createCombatData($combat_id)
+    {
         $data = Combat::find($combat_id);
         $data->draft = Tour::getDraft($combat_id);
         $data->users = User::whereIn('id', [$data->user1_id, $data->user2_id])->get();
-        $data->pokemon_user_1 = Pokemon::find($data->draft['0']['FK_pokemon_id']);
-        $data->pokemon_user_2 = Pokemon::find($data->draft['1']['FK_pokemon_id']);
+        $data->pokemon_user = Pokemon::whereIn('pokemon_id', [$data->draft['0']['FK_pokemon_id'], $data->draft['1']['FK_pokemon_id']])->get();
+        $data->users_hp = [$data->pokemon_user['0']['pv_max'], $data->pokemon_user['1']['pv_max']];
         $data->current_turn = 0;
         return $data;
     }
@@ -49,9 +52,23 @@ class fightController extends Controller
     public function handleFight(Request $request)
     {
         $data = json_decode($request->data, true);
+        $player_index = $data['current_turn'];
+        Tour::create([
+            'FK_user_id' => $data['users'][$player_index]['id'],
+            'FK_combat_id' => $data['lobby'],
+            'FK_pokemon_id' => $data['pokemon_user'][$player_index]['pokemon_id'],
+            'action' => $request->action
+        ]);
+        if ($data['current_turn'] == 0) {
+            $data['current_turn'] = 1;
+        }
+        else{
+            $data['current_turn'] = 0;
+        }
         //return $data;
         return view("combat.action", [
-            'data' => $data]);
+            'data' => $data
+        ]);
     }
 
     public function handleDraft(Request $request)
@@ -60,25 +77,30 @@ class fightController extends Controller
             'FK_combat_id' => $request->lobby,
             'FK_user_id' => $request->user,
             'FK_pokemon_id' => $request->pokemon,
-            'action' => 0]);
-        
-            //A remplacer par une requete avec un count dans l'ideal
+            'action' => 0
+        ]);
+
+        //A remplacer par une requete avec un count dans l'ideal
         $draft = Tour::getDraft($request->lobby);
-        if(count($draft)<6){
+        if (count($draft) < 6) {
 
             return view("combat.draft", [
                 'pkmn' => User::getUsersPokemons($request->opponent),
                 'lobby_id' => $request->lobby,
                 'current_user_id' => $request->opponent,
-                'opponent_id' => $request->user]);
+                'opponent_id' => $request->user
+            ]);
         }
         $data = $this->createCombatData($request->lobby);
         $data->lobby = $request->lobby;
+        //return $data;
         return view("combat.action", [
-            'data' => $data]);
+            'data' => $data
+        ]);
     }
 
-    public function handleCombat(Request $request){
+    public function handleCombat(Request $request)
+    {
         return view('combat.action');
     }
 

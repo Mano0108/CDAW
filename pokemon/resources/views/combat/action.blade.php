@@ -12,27 +12,29 @@
     <div id="main-container">
         <div class="user-container">
             <div class="pkmn-free-space"></div>
-            <div class="pkmn-hud"></div>
+            <div class="pkmn-hud">
+                <p>{{$data['pokemon_user']['1']['name']}}</p><br>
+                <p>HP : {{$data['users_hp']['1']}} / {{$data['pokemon_user']['0']['pv_max']}}</p>
+            </div>
             <div class="pkmn-image">
-                <img src="https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/{{$data['pokemon_user_2']['name']}}.png"
+                <img src="https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/{{$data['pokemon_user']['1']['name']}}.png"
                     alt="">
             </div>
         </div>
         <div class="user-container">
             <div class="pkmn-image">
                 <img id="current-user-pkmn"
-                    src="https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/{{$data['pokemon_user_1']['name']}}.png">
+                    src="https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/{{$data['pokemon_user']['0']['name']}}.png">
             </div>
-            <div class="pkmn-hud"></div>
+            <div class="pkmn-hud">
+                <p>{{$data['pokemon_user']['0']['name']}}</p><br>
+                <p>HP : {{$data['users_hp']['0']}} / {{$data['pokemon_user']['0']['pv_max']}}</p>
+            </div>
             <div class="pkmn-free-space"></div>
         </div>
         <div id="hub-container">
             <div id="dialog-container">
-                @if($data['current_turn'] == 0)
-                    <p>What will {{$data['pokemon_user_1']['name']}} do ?</p>
-                @else
-                    <p>What will {{$data['pokemon_user_2']['name']}} do ?</p>
-                @endif
+                <p>What will {{$data['pokemon_user'][$data['current_turn']]['name']}} do ?</p>
             </div>
             <div id="user-option-container">
                 <form class="fight-form" method="POST" action="/fight" x-data>
