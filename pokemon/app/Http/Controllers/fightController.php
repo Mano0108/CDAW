@@ -12,11 +12,13 @@ use App\Models\Pokemon;
 class fightController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * When a user start a game in menu/fight, this method handles matchmaking and redirect to draft (if SKIRMISH or RANKED) or to combat (if BLIND)
      *
      * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\View\View
      */
     public function createLobby(Request $request)
+    //TODO : Prendre en compte tous les modes et les amis
     {
         $tmp[0] = auth()->user()->id;
         $tmp[1] = Combat::findOpponent(auth()->user()->id)->id;
@@ -38,6 +40,12 @@ class fightController extends Controller
         ]);
     }
 
+    /**
+     * Once Matchmaking and Draft are completed, this method create the combat data that will be exchanged every turn
+     *
+     * @param  int
+     * @return \Illuminate\Http\Request
+     */
     public function createCombatData($combat_id)
     {
         $data = Combat::find($combat_id);
@@ -45,10 +53,21 @@ class fightController extends Controller
         $data->users = User::whereIn('id', [$data->user1_id, $data->user2_id])->get();
         $data->pokemon_user = Pokemon::whereIn('pokemon_id', [$data->draft['0']['FK_pokemon_id'], $data->draft['1']['FK_pokemon_id']])->get();
         $data->users_hp = [$data->pokemon_user['0']['pv_max'], $data->pokemon_user['1']['pv_max']];
+        $data->users_pokemon_index = [0, 1];
         $data->current_turn = 0;
         return $data;
     }
 
+    /**
+     * Once the drafted has started, every time a user choses a pokemon, this method is called.
+     *  It first generates a Tour with pokemon chosen id and action 0
+     *  If there are less than six pokemon chosen, return draft view to chose another pokemon
+     *  If there are already six pokemon chosen, return combat view
+     * (isn't called for blind mode)
+     * 
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Contracts\View\View
+     */
     public function handleDraft(Request $request)
     {
         Tour::create([
@@ -58,7 +77,7 @@ class fightController extends Controller
             'action' => 0
         ]);
 
-        //A remplacer par une requete avec un count dans l'ideal
+        // TODO : A remplacer par une requete avec un count dans l'ideal
         $draft = Tour::getDraft($request->lobby);
         if (count($draft) < 6) {
         //Si la draft est en cours on renvoit la vue de draft
@@ -78,6 +97,12 @@ class fightController extends Controller
         ]);
     }
 
+    /**
+     * Once
+     * 
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Contracts\View\View
+     */
     public function handleFight(Request $request)
     {
         $data = json_decode($request->data, true);
@@ -94,6 +119,16 @@ class fightController extends Controller
         else{
             //Application des degats = Actualisation des statistiques des pokemons
             $data = $this->applyDamage($data);
+            if ($this->isDraw($data)){
+                return "Draw";
+            }
+            $result =$this->isVictory($data);
+            if($result[0]){
+                $winner = $data['users'][$result[1]]['name'];
+                return "Vainqueur : $winner";
+            }
+            //return $data['users_pokemon_index'][0];
+            $data = $this->swapPokemon($data);
             //return $data;
             $data['current_turn'] = 0;
         }
@@ -103,14 +138,13 @@ class fightController extends Controller
         ]);
     }
 
-    
-
-    public function handleCombat(Request $request)
-    {
-        return view('combat.action');
-    }
-
-
+    /**
+     * Everytime user2 select their action, this method is called and it resolve the turn.
+     * Each players amount of damage applied are calculated and applied to $data->users_hp
+     * 
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Request
+     */
     private function applyDamage($data){
         $tmp = Tour::getLastTurn($data['lobby']);
         $actions = [$tmp[1], $tmp[0]];
@@ -133,4 +167,54 @@ class fightController extends Controller
         $data['users_hp']['1'] = $data['users_hp']['1'] - $damage_applied[0];
         return $data;
     }
+
+    /**
+     * Called at every resolution, check if fight ended on a draw
+     * 
+     * @param  \Illuminate\Http\Request
+     * @return bool
+     */
+    private function isDraw($data){
+        return ($data['users_pokemon_index'][0] == 4 &&   //user 1 utilise son dernier pokemon
+                $data['users_pokemon_index'][1] == 5 &&   //user 2 utilise son dernier pokemon
+                $data['users_hp'][0] <= 0 &&            //pokemon user 1 a 0 hp
+                $data['users_hp'][1] <= 0);             //pokemon user 2 a 0 hp
+    }
+    /**
+     * Called at every resolution, check if fight ended on a win
+     * If not, returns [false]
+     * If yes, returns [true, winner_id]
+     * 
+     * @param  \Illuminate\Http\Request
+     * @return array<int|bool>
+     */
+    private function isVictory($data){
+        for ($ii = 0; $ii <= 1; $ii++) {
+            if($data['users_pokemon_index'][$ii] == 4 + $ii && $data['users_hp'][$ii] <= 0){
+                return [true, 1 - $ii];
+            }
+        }
+        return [false];
+    }
+
+    /**
+     * Called at every resolution, check if a pokemon needs to be replaced
+     * 
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Request
+     */
+    private function swapPokemon($data){
+        for ($ii = 0; $ii <= 1; $ii++) {
+            if ($data['users_hp'][$ii] <= 0) {
+                $data['users_pokemon_index'][$ii] += 2; //index du pokemon +=2
+                $data['pokemon_user'][$ii] = Pokemon::find($data['draft'][$data['users_pokemon_index'][$ii]]['FK_pokemon_id']); //changement du pokemon dans pokemon_user
+                $data['users_hp'][$ii] = $data['pokemon_user'][$ii]['pv_max'];
+            }
+        }
+        return $data;
+    }
+    /*public function handleCombat(Request $request)
+    {
+        return view('combat.action');
+    }*/
 }

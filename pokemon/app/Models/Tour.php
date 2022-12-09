@@ -19,10 +19,22 @@ class Tour extends Model
         'action'
     ];
 
+    /**
+     * Every Tour of a specific combat where action = 0 (represents a pokemon draft) 
+     *
+     * @param int 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public static function getDraft($combat_id){
         return Tour::where('FK_combat_id', '=', $combat_id, "AND")->where('action', '=', 0)->get();
     }
 
+    /**
+     * Last two turn inserted in the DB 
+     *
+     * @param int 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public static function getLastTurn($combat_id){
         return Tour::select('action')->where('FK_combat_id', '=', $combat_id,)->orderBy('created_at', 'desc')->take(2)->get();
     }

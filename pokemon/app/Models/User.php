@@ -73,17 +73,30 @@ class User extends Authenticatable
         return User::with('energies')->where('id', "=", $user_id)->get();
     }
 
+    /**
+     * Return the most drafted pokemon of a user 
+     *
+     * @param int 
+     * @return string
+     */
     public static function getFavoritePokemon($user_id)
     {
         return  DB::table('tour')
             ->select('pokemon.path')
             ->join('pokemon', 'tour.FK_pokemon_id', '=', 'pokemon.pokemon_id', '')
-            ->where('tour.FK_user_id', '=', $user_id)
+            ->where('tour.FK_user_id', '=', $user_id, 'AND')
+            ->where('tour.action', '=', 0)
             ->groupBy('pokemon.path')
             ->orderBy( DB::raw('count(pokemon.pokemon_id)'), 'DESC')
             ->first();
     }
 
+    /**
+     * Every pokemon a player has unlocked 
+     *(fills the pokedex)
+     * @param  
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public static function getUsersPokemons($user_id)
     {
         $user_level = User::find($user_id)->level;

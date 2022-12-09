@@ -27,14 +27,4 @@ class Energy extends Model
         return $this->belongsToMany(User::class, 'user_energy', 'FK_energy', 'FK_user', 'energy_id', 'id' );
     }
 
-    public function Serialize()
-    {
-        return 
-        [
-            'energy_id'   => $this->energy_id,
-            'name' => $this->name,
-            'path' => $this->path,
-            'icon' => $this->icon
-        ];
-    }
 }

@@ -17,6 +17,12 @@ class Combat extends Model
         'user2_id'
     ];
 
+    /**
+     * Random matchmaking function
+     *
+     * @param int 
+     * @return User
+     */
     public static function findOpponent($user_id){
         $opponents = User::where("id", '!=', $user_id)->get();
         $nb_opponents = count($opponents);
