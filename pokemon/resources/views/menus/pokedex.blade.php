@@ -12,7 +12,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/create_data_tables.js') }}"></script>
 @endpush
 
-@include('tools.navbar')
+@include('menus.header')
 <br>
     <table id="pokemon">
         <thead>

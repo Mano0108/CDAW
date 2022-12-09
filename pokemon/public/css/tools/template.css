@@ -1,0 +1,29 @@
+body {
+
+    /*background: conic-gradient(from 40.11deg at 73.78% 50%, rgba(255, 83, 83, 0.86) -19.27deg, rgba(47, 188, 219, 0.89) 43.12deg, rgba(65, 187, 203, 0.91) 168.34deg, rgba(245, 203, 51, 0.92) 219.28deg, rgba(255, 83, 83, 0.86) 340.73deg, rgba(47, 188, 219, 0.89) 403.12deg), linear-gradient(69.82deg, #FFC700 19.4%, #2B4192 33.15%, #922B2B 65.7%);
+    */
+    background-color: rgba(200,200,200,1); 
+    height: 100%;
+}
+
+.left,
+.right {
+    width: 20%;
+}
+
+.right{
+    margin-right: 1%;
+}
+
+.middle {
+    width: 60%;
+}
+
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 48px;
+    margin-top: 15px;
+}

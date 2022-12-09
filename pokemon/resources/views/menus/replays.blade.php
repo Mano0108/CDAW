@@ -1,6 +1,6 @@
 <x-app-layout>
     
-    @include('tools.navbar')
+    @include('menus.header')
 
 
     <p>Welcome {{$user->name}}</p>

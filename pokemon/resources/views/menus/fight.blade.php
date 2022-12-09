@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="{{ URL::asset('css/menus/fight.css') }} " type="text/css">
     @endpush
 
-    @include('tools.navbar')
+    @include('menus.header')
 
 
     <div id="main-container">

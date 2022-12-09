@@ -145,7 +145,9 @@ class fightController extends Controller
      * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Request
      */
-    private function applyDamage($data){
+    private function applyDamage($data)
+    //TODO : ajouter les resistances et efficacités
+    {
         $tmp = Tour::getLastTurn($data['lobby']);
         $actions = [$tmp[1], $tmp[0]];
         $damage_applied = [0, 0];
