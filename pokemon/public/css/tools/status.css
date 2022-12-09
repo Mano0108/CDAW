@@ -1,0 +1,17 @@
+.dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 0px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+    height: 48px;
+    min-width: 100px;
+}
+
+#connected{
+    margin-bottom: -4px;
+    margin-right: 10px;
+}

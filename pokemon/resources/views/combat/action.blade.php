@@ -3,12 +3,9 @@
     @push('style')
         <link rel="stylesheet" href="{{ URL::asset('css/combat/action.css') }} " type="text/css">
     @endpush
+    
+    @include('combat.header')
 
-    <div id="instruction-container">
-        <p>LOBBY : {{ $data['lobby'] }}</p>
-        <p>user 1 : {{ $data['users']['0']['name']}}</p>
-        <p>user 2 : {{$data['users']['1']['name'] }}</p>
-    </div>
     <div id="main-container">
         <div class="user-container">
             <div class="pkmn-free-space"></div>
