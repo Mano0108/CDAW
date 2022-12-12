@@ -51,8 +51,9 @@ In order to set up the database on your server :
 - Affichage de la draft
 - Replays
 - Changer l'affichage du pokedex
-- Creer une fonction pour les statistiques des pokemons
+- Creer une fonction pour creer les statistiques des pokemons
 - Animation des combats
+- Changer d'avatar
 - Requête ajax sur les pokemons
 - Requête ajax sur les energy
 
