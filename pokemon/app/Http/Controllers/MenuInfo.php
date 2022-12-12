@@ -13,7 +13,7 @@ class MenuInfo extends Controller
      * Handle the incoming request.
      *
      */
-    public function __invoke(Request $request)
+    public function invoke(Request $request)
     {
         $user = auth()->user();
         $user_energy = User::getUserEnergies($user->id);

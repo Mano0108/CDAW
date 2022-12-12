@@ -43,49 +43,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/menu/info', "App\Http\controllers\MenuInfo")->name('menu-info');
-});
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/menu/replays', function () {
-        return view('menus.replays', [
-            'user' => auth()->user()
-        ]);
-    }
-    )->name('menu-replays');
-});
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/menu/team', "App\Http\controllers\MenuTeam")->name('menu-team');
-});
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/menu/fight', function () {
-        return view('menus.fight', [
-            'user' => auth()->user()
-        ]);
-    }
-    )->name('menu-fight');
-});
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/menu/pokedex', 'App\Http\controllers\listePokemonsController@getTable')->name('menu-pokedex');
+    Route::get('/menu/{menu}', 'App\Http\controllers\menuController@redirect')->name('menus');
 });
 
 Route::get('/signup', function () {
@@ -144,6 +102,62 @@ echo $energy->FK_energy . "\n";
 });
 /*Route::get('/pokemon', function () {
 return view('listepokemons');
-});*/
+});
+
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/menu/info', "App\Http\controllers\MenuInfo")->name('menu-info');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/menu/replays', function () {
+        return view('menus.replays', [
+            'user' => auth()->user()
+        ]);
+    }
+    )->name('menu-replays');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/menu/team', "App\Http\controllers\MenuTeam")->name('menu-team');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/menu/fight', function () {
+        return view('menus.fight', [
+            'user' => auth()->user()
+        ]);
+    }
+    )->name('menu-fight');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/menu/pokedex', 'App\Http\controllers\listePokemonsController@getTable')->name('menu-pokedex');
+});
+
+
+
+*/
 
 
