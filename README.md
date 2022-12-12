@@ -2,17 +2,26 @@
 
 ## Installation
 
+#### Pré-requis
+
+- php : v8.0
+- node : v19.1
+- npm : 8.19
+- Laravel : 9.40
+
+Clone the repo and run :
+```
+  composer update
+```
+
+Copy .env.example, rename it .env and fill it with your parameters, then run :
+```
+   npm install
+```
+```
+   npm run dev
+```
 In order to set up the database on your server :
-
-php -v
-
-composer update
-
-npm install
-
-npm run dev
-
-copy .env file and fill it
 
 1. Do the database migrations by running the following command:
 
@@ -34,6 +43,16 @@ copy .env file and fill it
 4. <del>Main Menu (fight) pour un user loggé basique permettant de lancer un combat</del>
 5. <del>Habillage du main menu (fight)</del>
 6. Création du mode de combat random
-7. Création du mode de combat draft
+7. <del>Création du mode de combat draft</del>
 8. Création du mode de combat ranked
 9. <del>Implémentation des boutons de la toolbar et de leur page respective</del>
+
+- Faire un shop pour les energy
+- Affichage de la draft
+- Replays
+- Changer l'affichage du pokedex
+- Creer une fonction pour les statistiques des pokemons
+- Animation des combats
+- Requête ajax sur les pokemons
+- Requête ajax sur les energy
+
