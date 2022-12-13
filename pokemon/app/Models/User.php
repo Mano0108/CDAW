@@ -124,6 +124,13 @@ class User extends Authenticatable
         $pokemon_user = Pokemon::with('energies')->whereIn('pokemon_id', $pokemon_list)->get();
         return $pokemon_user;
     }
+    
+    /**
+     * Return the energy that a player hasn't unlocked yet
+     *
+     * @param int 
+     * @return string
+     */
     public static function getUsersUnlockable($user_id)
     {
         $unlockable_energies = DB::table('energy')
