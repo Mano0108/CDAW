@@ -15,6 +15,14 @@
     min-width: 100px;
 }
 
+.dropbtn {
+    display: flex;
+    justify-content: left;
+}
+
+.dropbtn img {
+}
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -34,8 +42,15 @@
 }
 
 #connected{
-    margin-bottom: -4px;
+    width: 17px;
+    height: 17px;
+    margin-top: 14px;
     margin-right: 10px;
+    margin-left: 5px;
+}
+
+.dropbtn p{
+    margin-top: 10px;
 }
 
 

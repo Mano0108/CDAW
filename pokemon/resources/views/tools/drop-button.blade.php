@@ -6,7 +6,7 @@
             
     <button class="dropbtn">
         <img id ="connected" src="{{URL::asset('/images/navbar/status.png')}}" >
-        {{ $user->name }}
+        <p>{{ $user->name }}</p>
     </button>
     <div class="dropdown-content">
         <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
