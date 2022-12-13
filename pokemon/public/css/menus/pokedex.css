@@ -1,0 +1,15 @@
+#main-container{
+    display: flex;
+    justify-content: left;
+
+    background-color: #C0F3EA;
+
+    margin-top: 75px;
+    margin-left: 50%;
+    translate: -50%;
+
+    width: 1200px;
+    height: 600px;
+}
+
+
