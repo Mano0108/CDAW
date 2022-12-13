@@ -19,6 +19,7 @@ class fightController extends Controller
      */
     public function createLobby(Request $request)
     //TODO : Prendre en compte tous les modes et les amis
+
     {
         $tmp[0] = auth()->user()->id;
         $tmp[1] = Combat::findOpponent(auth()->user()->id)->id;
@@ -32,6 +33,12 @@ class fightController extends Controller
                 'lobby_id' => $lastValue,
                 'current_user_id' => $tmp[0],
                 'opponent_id' => $tmp[1]
+            ]);
+        } elseif ($request->mode == "blind") {
+            $this->blindDraft($lastValue, $tmp[0], $tmp[1]);
+            $data = $this->createCombatData($lastValue);
+            return view("combat.action", [
+                'data' => $data
             ]);
         }
         return view("combat.lobby", [
@@ -49,6 +56,7 @@ class fightController extends Controller
     public function createCombatData($combat_id)
     {
         $data = Combat::find($combat_id);
+        $data->lobby = $combat_id;
         $data->draft = Tour::getDraft($combat_id);
         $data->users = User::whereIn('id', [$data->user1_id, $data->user2_id])->get();
         $data->pokemon_user = Pokemon::whereIn('pokemon_id', [$data->draft['0']['FK_pokemon_id'], $data->draft['1']['FK_pokemon_id']])->get();
@@ -80,7 +88,7 @@ class fightController extends Controller
         // TODO : A remplacer par une requete avec un count dans l'ideal
         $draft = Tour::getDraft($request->lobby);
         if (count($draft) < 6) {
-        //Si la draft est en cours on renvoit la vue de draft
+            //Si la draft est en cours on renvoit la vue de draft
             return view("combat.draft", [
                 'pkmn' => User::getUsersPokemons($request->opponent),
                 'lobby_id' => $request->lobby,
@@ -90,13 +98,43 @@ class fightController extends Controller
         }
         //Sinon on renvoit la vue de combat (action.blade.php)
         $data = $this->createCombatData($request->lobby);
-        $data->lobby = $request->lobby;
         //return $data;
         return view("combat.action", [
             'data' => $data
         ]);
     }
 
+    /**
+     * When a player start a blind draft, this method create the randomized draft
+     * 
+     * @param  int, int, int
+     * @return 
+     */
+    public function blindDraft(int $combat_id, int $user1, int $user2)
+    {
+        $pokemon_id = [];
+            $tmp_pokemon_id = rand(1, 251);
+            for ($ii = 0; $ii <= 6; $ii += 1) {
+                while (in_array($tmp_pokemon_id, $pokemon_id)) {
+                    $tmp_pokemon_id = rand(1, 251);
+                }
+                array_push($pokemon_id, $tmp_pokemon_id);
+            }
+            for ($jj = 1; $jj <= 6; $jj += 2) {
+                Tour::create([
+                    'FK_combat_id' => $combat_id,
+                    'FK_user_id' => $user1,
+                    'FK_pokemon_id' => $pokemon_id[$jj],
+                    'action' => 0
+                ]);
+                Tour::create([
+                    'FK_combat_id' => $combat_id,
+                    'FK_user_id' => $user2,
+                    'FK_pokemon_id' => $pokemon_id[$jj + 1],
+                    'action' => 0
+                ]);
+            }
+    }
     /**
      * Once
      * 
@@ -115,15 +153,14 @@ class fightController extends Controller
         ]);
         if ($data['current_turn'] == 0) {
             $data['current_turn'] = 1;
-        }
-        else{
+        } else {
             //Application des degats = Actualisation des statistiques des pokemons
             $data = $this->applyDamage($data);
-            if ($this->isDraw($data)){
+            if ($this->isDraw($data)) {
                 return "Draw";
             }
-            $result =$this->isVictory($data);
-            if($result[0]){
+            $result = $this->isVictory($data);
+            if ($result[0]) {
                 $winner = $data['users'][$result[1]]['name'];
                 return "Vainqueur : $winner";
             }
@@ -147,22 +184,22 @@ class fightController extends Controller
      */
     private function applyDamage($data)
     //TODO : ajouter les resistances et efficacités
+
     {
         $tmp = Tour::getLastTurn($data['lobby']);
         $actions = [$tmp[1], $tmp[0]];
         $damage_applied = [0, 0];
-        for($ii = 0; $ii<=1; $ii++){
-            if($actions[$ii]['action'] == 1){
+        for ($ii = 0; $ii <= 1; $ii++) {
+            if ($actions[$ii]['action'] == 1) {
                 $damage_applied[$ii] = $data['pokemon_user'][$ii]['attack'];
-            }
-            elseif($actions[$ii]['action'] == 2){
+            } elseif ($actions[$ii]['action'] == 2) {
                 $damage_applied[$ii] = $data['pokemon_user'][$ii]['special_attack'];
             }
         }
-        if($actions[0]['action'] == 3){
+        if ($actions[0]['action'] == 3) {
             $damage_applied[1] = max(0, $damage_applied[1] - $data['pokemon_user'][0]['special_defense']);
         }
-        if($actions[1]['action'] == 3){
+        if ($actions[1]['action'] == 3) {
             $damage_applied[0] = max(0, $damage_applied[0] - $data['pokemon_user'][1]['special_defense']);
         }
         $data['users_hp']['0'] = $data['users_hp']['0'] - $damage_applied[1];
@@ -176,11 +213,12 @@ class fightController extends Controller
      * @param  \Illuminate\Http\Request
      * @return bool
      */
-    private function isDraw($data){
-        return ($data['users_pokemon_index'][0] == 4 &&   //user 1 utilise son dernier pokemon
-                $data['users_pokemon_index'][1] == 5 &&   //user 2 utilise son dernier pokemon
-                $data['users_hp'][0] <= 0 &&            //pokemon user 1 a 0 hp
-                $data['users_hp'][1] <= 0);             //pokemon user 2 a 0 hp
+    private function isDraw($data)
+    {
+        return ($data['users_pokemon_index'][0] == 4 && //user 1 utilise son dernier pokemon
+            $data['users_pokemon_index'][1] == 5 && //user 2 utilise son dernier pokemon
+            $data['users_hp'][0] <= 0 && //pokemon user 1 a 0 hp
+            $data['users_hp'][1] <= 0); //pokemon user 2 a 0 hp
     }
     /**
      * Called at every resolution, check if fight ended on a win
@@ -190,9 +228,10 @@ class fightController extends Controller
      * @param  \Illuminate\Http\Request
      * @return array<int|bool>
      */
-    private function isVictory($data){
+    private function isVictory($data)
+    {
         for ($ii = 0; $ii <= 1; $ii++) {
-            if($data['users_pokemon_index'][$ii] == 4 + $ii && $data['users_hp'][$ii] <= 0){
+            if ($data['users_pokemon_index'][$ii] == 4 + $ii && $data['users_hp'][$ii] <= 0) {
                 return [true, 1 - $ii];
             }
         }
@@ -205,7 +244,8 @@ class fightController extends Controller
      * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Request
      */
-    private function swapPokemon($data){
+    private function swapPokemon($data)
+    {
         for ($ii = 0; $ii <= 1; $ii++) {
             if ($data['users_hp'][$ii] <= 0) {
                 $data['users_pokemon_index'][$ii] += 2; //index du pokemon +=2
@@ -215,8 +255,8 @@ class fightController extends Controller
         }
         return $data;
     }
-    /*public function handleCombat(Request $request)
-    {
-        return view('combat.action');
-    }*/
+/*public function handleCombat(Request $request)
+{
+return view('combat.action');
+}*/
 }
