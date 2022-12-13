@@ -16,6 +16,7 @@ class listePokemonsController extends Controller
      */
     public function getTable(){
         $pokemon = Pokemon::getAll();
+        //return $pokemon;
         return view('menus.pokedex', ['pkmn' => $pokemon, 'user'=>auth()->user()]);
     }
 

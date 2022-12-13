@@ -20,36 +20,22 @@
 
 <div id="main-container">
     <table id="pokemon">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>Name</th>
-                <th>Image</th>
-                <th>Energy</th>
-            </tr>
-        </thead>
         <tbody>
-            @foreach ($pkmn as $pokemon)
-                <tr>
-                    <td> {{ $pokemon->pokemon_id }} </td>
-                    <td> {{ $pokemon->name }} </td>
-                    <td> <img src={{ $pokemon->path }} alt='alternatetext'> </td>
+            <tr>
+            @for ($i = 0; $i < count($pkmn); $i++)
+            <td> {{ $pkmn[$i]->pokemon_id }} </td>
+            <td> {{ $pkmn[$i]->name }} </td>
+            <td> <img src={{ $pkmn[$i]->path }} alt='alternatetext'> </td>
 
-                    <td>
-                        <table>
-                            @foreach ($pokemon->energies as $energy)
-                            <tr>
-                                <td>
-                                    <img src={{ $energy->path }} alt="{{ $energy->name }}" width="110" height="26">
-                                    <span style="display:none;">{{ $energy->name }}</span>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </table>
-                    </td>
-                    </td>
-                </tr>
-            @endforeach
+            @if ($i == count($pkmn))
+                    </tr>
+                @elseif($i % 8 == 2)
+                    </tr>
+                    <tr>
+                        @endif
+            </td>
+            @endfor
+            </tr>
         </tbody>
     </table>
 </div>
