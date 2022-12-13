@@ -27,6 +27,7 @@ class fightController extends Controller
         Combat::create(['user1_id' => $tmp[0], 'user2_id' => $tmp[1]]);
 
         $lastValue = DB::table('combat')->orderBy('combat_id', 'desc')->first()->combat_id;
+        // if mode = skirmish, start draft
         if ($request->mode == "skirmish") {
             return view("combat.draft", [
                 'pkmn' => User::getUsersPokemons($tmp[0]),
@@ -34,17 +35,20 @@ class fightController extends Controller
                 'current_user_id' => $tmp[0],
                 'opponent_id' => $tmp[1]
             ]);
-        } elseif ($request->mode == "blind") {
+        // if mode = blind, make draft and start combat
+        } 
+        elseif ($request->mode == "blind") {
             $this->blindDraft($lastValue, $tmp[0], $tmp[1]);
             $data = $this->createCombatData($lastValue);
             return view("combat.action", [
                 'data' => $data
             ]);
         }
+        /*
         return view("combat.lobby", [
             'mode' => $request->mode,
             'lobby_id' => $lastValue
-        ]);
+        ]);*/
     }
 
     /**
@@ -105,7 +109,7 @@ class fightController extends Controller
     }
 
     /**
-     * When a player start a blind draft, this method create the randomized draft
+     * When a player start a blind game, this method create the randomized draft
      * 
      * @param  int, int, int
      * @return 
@@ -136,7 +140,7 @@ class fightController extends Controller
             }
     }
     /**
-     * Once
+     * This method create the combat data for the next turn from last turn's data
      * 
      * @param  \Illuminate\Http\Request
      * @return \Illuminate\Contracts\View\View
@@ -157,7 +161,9 @@ class fightController extends Controller
             //Application des degats = Actualisation des statistiques des pokemons
             $data = $this->applyDamage($data);
             if ($this->isDraw($data)) {
-                return "Draw";
+                return view('combat.draw', [
+                    'data' => $data
+                ]);
             }
             $result = $this->isVictory($data);
             if ($result[0]) {

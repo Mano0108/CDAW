@@ -6,6 +6,6 @@
             
     <div class="dropbtn">
         <img id ="connected" src="{{URL::asset('/images/navbar/status.png')}}" >
-        {{ auth()->user()->name}}
+        <p>{{ auth()->user()->name}}</p>
     </div>
 </div>

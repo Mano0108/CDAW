@@ -9,9 +9,18 @@
     margin: 0;
     height: 48px;
     min-width: 100px;
+    display: flex;
+    justify-content: left;
 }
 
 #connected{
-    margin-bottom: -4px;
+    width: 17px;
+    height: 17px;
+    margin-top: 14px;
     margin-right: 10px;
+    margin-left: 5px;
+}
+
+.dropbtn p{
+    margin-top: 10px;
 }
