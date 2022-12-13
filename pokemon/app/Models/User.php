@@ -126,10 +126,15 @@ class User extends Authenticatable
     }
     public static function getUsersUnlockable($user_id)
     {
-
-        $unlockable_energies = DB::select("SELECT energy.*  FROM energy 
-        LEFT JOIN user_energy ON user_energy.FK_energy = energy.energy_id AND user_energy.FK_user = 1
-        WHERE user_energy.FK_energy IS NULL");
+        $unlockable_energies = DB::table('energy')
+        ->select('*')
+        ->leftJoin('user_energy', function($q) use ($user_id)
+        {
+            $q->on('user_energy.FK_energy', '=', 'energy.energy_id')
+                ->where('user_energy.FK_user', '=', $user_id);
+        })
+        ->whereNull('user_energy.FK_energy')
+        ->get();
 
         return $unlockable_energies;
     }
