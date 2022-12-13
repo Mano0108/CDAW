@@ -14,12 +14,21 @@ class menuController extends Controller
         'fight' => "",
         'team' => "",
         'pokedex' => "",
-        'replays' => ""
+        'replays' => "",
+        'shop' => ""
     ];
     public function redirect($menu)
     {
         $this->current_menu[$menu] .= ' current-menu';
         switch ($menu) {
+            case 'shop' : 
+                //return User::getUserEnergies(auth()->user()->id);
+                return view('menus.shop', [
+                    'user' => auth()->user(),
+                    'energies' => User::getUsersUnlockable(auth()->user()->id),
+                    'menu' => $this->current_menu
+
+                ]);
             case 'fight':
                 return view('menus.fight', [
                     'user' => auth()->user(),
