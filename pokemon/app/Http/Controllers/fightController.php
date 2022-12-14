@@ -167,8 +167,11 @@ class fightController extends Controller
             }
             $result = $this->isVictory($data);
             if ($result[0]) {
-                $winner = $data['users'][$result[1]]['name'];
-                return "Vainqueur : $winner";
+                $winner = $data['users'][$result[1]]['id'];
+                $data['winner_id'] = $winner;
+                return view('combat.victory', [
+                    'data' => $data
+                ]);
             }
             //return $data['users_pokemon_index'][0];
             $data = $this->swapPokemon($data);

@@ -27,5 +27,6 @@
                 <div class="user-reward"> <p>golds : {{$data['users'][1]['gold']}} + 10 ->  {{$data['users'][1]['gold'] + 10}}</p></div>
             </div>
         </div>
+        <p id="indication">click to continue</p>
     </div>
 </x-app-layout>
