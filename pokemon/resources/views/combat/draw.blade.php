@@ -4,9 +4,13 @@
         <link rel="stylesheet" href="{{ URL::asset('css/combat/draw.css') }} " type="text/css">
     @endpush
     
+    @push('script')
+    <script type="text/javascript" src="{{ URL::asset('js/menus/navigate.js') }}"></script>
+    @endpush
+
     @include('combat.header')
 
-    <div id="main-container">
+    <div id="main-container" onclick="goToFight()">
         <div id="result">
             <p>DRAW</p>
         </div>
