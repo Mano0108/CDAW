@@ -32,7 +32,7 @@
         <div id="hub-container">
             <div id="dialog-container">
                 <div id="dialog-text">
-                    <span>What will {{strtoupper($data['pokemon_user'][$data['current_turn']]['name'])}} do ?</span>
+                    <span >What will {{strtoupper($data['pokemon_user'][$data['current_turn']]['name'])}} do ?</span>
                 </div>
             </div>
             <div id="user-option-container">
@@ -57,6 +57,10 @@
     </div>
 
     @push('script')
+    <script>
+        var text = "{{json_encode($data['animations'])}}";
+        var data = JSON.parse(text.replace(/&quot;/g,'"'));
+    </script>
     <script type="text/javascript" src="{{ URL::asset('js/combat/animation.js') }}"></script>
     @endpush
 </x-app-layout>

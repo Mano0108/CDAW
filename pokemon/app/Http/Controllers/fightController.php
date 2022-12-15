@@ -67,7 +67,8 @@ class fightController extends Controller
         $data->users_hp = [$data->pokemon_user['0']['pv_max'], $data->pokemon_user['1']['pv_max']];
         $data->users_pokemon_index = [0, 1];
         $data->current_turn = 0;
-        $data->animations = [];
+        $name = strtoupper($data['pokemon_user'][0]['name']);
+        $data->animations = [["prompt", "What will $name do ?"]];
         return $data;
     }
 
@@ -179,6 +180,8 @@ class fightController extends Controller
             //return $data;
             $data['current_turn'] = 0;
         }
+        $name = strtoupper($data['pokemon_user'][$data['current_turn']]['name']);
+        $data['animations'] = [["prompt", "What will $name do ?"]];
         //return $data;
         return view("combat.action", [
             'data' => $data
