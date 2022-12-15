@@ -42,12 +42,12 @@
                     <table id="btn-container">
                         <tbody>
                             <tr>
-                                <td><button class="fight-btn" name="action" value="1">ATTACK</button></td>
-                                <td><button class="fight-btn" name="action" value="2">SP ATTACK</button></td>
+                                <td><button class="fight-btn" name="action" value="1" style="display: none;">ATTACK</button></td>
+                                <td><button class="fight-btn" name="action" value="2" style="display: none;">SP ATTACK</button></td>
                             </tr>
                             <tr>
-                                <td><button class="fight-btn" name="action" value="3">DEFENSE</button></td>
-                                <td><button id="quit-btn" class="fight-btn" name="action" value="logout">QUIT</button></td>
+                                <td><button class="fight-btn" name="action" value="3" style="display: none;">DEFENSE</button></td>
+                                <td><button id="quit-btn" class="fight-btn" name="action" value="logout" style="display: none;">QUIT</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -60,6 +60,7 @@
     <script>
         var text = "{{json_encode($data['animations'])}}";
         var data = JSON.parse(text.replace(/&quot;/g,'"'));
+        var count = {{count($data['animations'])}};
     </script>
     <script type="text/javascript" src="{{ URL::asset('js/combat/animation.js') }}"></script>
     @endpush

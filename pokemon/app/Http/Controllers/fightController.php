@@ -67,8 +67,9 @@ class fightController extends Controller
         $data->users_hp = [$data->pokemon_user['0']['pv_max'], $data->pokemon_user['1']['pv_max']];
         $data->users_pokemon_index = [0, 1];
         $data->current_turn = 0;
-        $name = strtoupper($data['pokemon_user'][0]['name']);
-        $data->animations = [["prompt", "What will $name do ?"]];
+        $name1 = strtoupper($data['pokemon_user'][0]['name']);
+        $name2 = strtoupper($data['pokemon_user'][1]['name']);
+        $data->animations = [["change","$name1 enter the arena"],["change","$name2 enter the arena"],["action", "What will $name1 do ?"]];
         return $data;
     }
 
@@ -150,6 +151,7 @@ class fightController extends Controller
     public function handleFight(Request $request)
     {
         $data = json_decode($request->data, true);
+        $data['animations'] = [];
         $player_index = $data['current_turn'];
         Tour::create([
             'FK_user_id' => $data['users'][$player_index]['id'],
@@ -181,7 +183,7 @@ class fightController extends Controller
             $data['current_turn'] = 0;
         }
         $name = strtoupper($data['pokemon_user'][$data['current_turn']]['name']);
-        $data['animations'] = [["prompt", "What will $name do ?"]];
+        array_push($data['animations'],["action", "What will $name do ?"]);
         //return $data;
         return view("combat.action", [
             'data' => $data
@@ -264,6 +266,8 @@ class fightController extends Controller
                 $data['users_pokemon_index'][$ii] += 2; //index du pokemon +=2
                 $data['pokemon_user'][$ii] = Pokemon::find($data['draft'][$data['users_pokemon_index'][$ii]]['FK_pokemon_id']); //changement du pokemon dans pokemon_user
                 $data['users_hp'][$ii] = $data['pokemon_user'][$ii]['pv_max'];
+                $name = strtoupper($data['pokemon_user'][$ii]['name']);
+                array_push($data['animations'], ["action", "$name enters the arena"]);
             }
         }
         return $data;
