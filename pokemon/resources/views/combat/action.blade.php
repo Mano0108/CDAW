@@ -31,7 +31,9 @@
         </div>
         <div id="hub-container">
             <div id="dialog-container">
-                <p>What will {{$data['pokemon_user'][$data['current_turn']]['name']}} do ?</p>
+                <div id="dialog-text">
+                    <span>What will {{strtoupper($data['pokemon_user'][$data['current_turn']]['name'])}} do ?</span>
+                </div>
             </div>
             <div id="user-option-container">
                 <form class="fight-form" method="POST" action="/fight" x-data>
@@ -53,4 +55,8 @@
             </div>
         </div>
     </div>
+
+    @push('script')
+    <script type="text/javascript" src="{{ URL::asset('js/combat/animation.js') }}"></script>
+    @endpush
 </x-app-layout>

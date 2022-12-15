@@ -67,6 +67,7 @@ class fightController extends Controller
         $data->users_hp = [$data->pokemon_user['0']['pv_max'], $data->pokemon_user['1']['pv_max']];
         $data->users_pokemon_index = [0, 1];
         $data->current_turn = 0;
+        $data->animations = [];
         return $data;
     }
 
