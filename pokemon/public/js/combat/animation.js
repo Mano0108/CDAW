@@ -9,6 +9,29 @@ function prompt(text){
     $('#dialog-text').animate( { width: spanWidth +50 }, 500);
 }
 
+function animateValue(number, target, elem) {
+    if(number < target) {
+        var interval = setInterval(function() {
+            $(elem).text(number);
+            if (number >= target) {
+                clearInterval(interval);
+                return;
+            }
+            number++;
+        }, 30);
+    }
+    if(target < number) {
+        var interval = setInterval(function() {
+            $(elem).text(number);
+            if (target >= number) {
+                clearInterval(interval);
+                return;
+            }
+            number--;
+        }, 30);
+    }
+} 
+
 function triggerAnimation(array){
     switch (animations[ii][0]) {
         case 'change':
@@ -20,13 +43,18 @@ function triggerAnimation(array){
                 $('#hidden-form').val(JSON.stringify(data));
                 $('#pokemon-name-user-' + user_index).text(data['pokemon_user'][user_index]['name']);
                 $('#current-user-pkmn-' + user_index).attr('src', "https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/" + data['pokemon_user'][user_index]['name'] + ".png");
-                $('#hp-user-' + user_index).text('HP : ' + data['users_hp'][user_index] + ' / ' + data['users_hp'][user_index]);
+                $('#hp-user-' + user_index).text(data['users_hp'][user_index]);
+                $('#hp-max-user-' + user_index).text(' / ' + data['users_hp'][user_index]);
                 prompt(animations[ii][1]);
             }
           break;
         case 'action':
-            user_index = animations[ii][2];
-            text = data['pokemon_user'][user_index]['name'] + " use "
+            var user_index = animations[ii][2];
+            var other_index = 1 - user_index;
+            text = data['pokemon_user'][user_index]['name'] + " use ";
+            animateValue(data['users_hp_last_turn'][other_index], data['users_hp'][other_index], $('#hp-user-' + other_index))
+            //$('#hp-user-' + other_index).text(data['users_hp'][other_index]);
+            $('#hp-max-user-' + other_index).text(' / ' + data['pokemon_user'][other_index]['pv_max']);
             switch(animations[ii][1]){
                 case 1:
                     prompt(text + "ATTACK");

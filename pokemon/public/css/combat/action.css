@@ -129,3 +129,9 @@ div#dialog-text {
     white-space: nowrap;
     overflow: hidden;
 }
+
+.hp-displayer{
+    display: flex;
+    justify-content: left;
+    width: 1000px;
+}

@@ -154,6 +154,7 @@ class fightController extends Controller
     {
         $data = json_decode($request->data, true);
         //return $data;
+        $data['users_hp_last_turn'] = $data['users_hp'];
         $data['animations'] = [];
         $player_index = $data['current_turn'];
         Tour::create([
@@ -207,7 +208,6 @@ class fightController extends Controller
     //TODO : ajouter les resistances et efficacités
 
     {
-        $data['users_hp_last_turn'] = $data['users_hp'];
         $tmp = Tour::getLastTurn($data['lobby']);
         $actions = [$tmp[1], $tmp[0]];
         $damage_applied = [0, 0];
