@@ -30,6 +30,21 @@ class Tour extends Model
     }
 
     /**
+     * Every Pokemons with their energies drafted in a specific fight 
+     *
+     * @param int 
+     * @return array
+     */
+    public static function getDraftPokemons(int $combat_id){
+        $tours = Tour::getDraft($combat_id);
+        $draft = [];
+        foreach($tours as $tour){
+            array_push($draft, Pokemon::with('energies')->find($tour->FK_pokemon_id));
+        }
+        return $draft;
+    }
+
+    /**
      * Last two turn inserted in the DB 
      *
      * @param int 

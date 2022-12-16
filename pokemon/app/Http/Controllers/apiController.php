@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pokemon;
 use App\Models\PokemonEnergy;
 use App\Models\Energy;
+use App\Models\Tour;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
@@ -21,5 +22,9 @@ class apiController extends Controller
         $json = $pokemon->Serialize();
         array_push($json, ['energies' => $energies]);
         return new JsonResponse($json);
+    }
+
+    public function test(){
+        return Tour::getDraftPokemons(200);
     }
 }

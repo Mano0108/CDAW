@@ -54,6 +54,8 @@ Route::get('', function () {
     return view('auth.login');
     });
 
+Route::get('/test', 'App\Http\controllers\apiController@test')->name('test');
+
 /*redirect to login form
 Route::get('', function () {
 return view('loginForm',[
