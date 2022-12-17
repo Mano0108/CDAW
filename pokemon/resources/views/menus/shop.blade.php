@@ -12,6 +12,7 @@
 
 @include('menus.header')
 
+<h1>{{$user->gold}}</h1>
 
 <table id="shop">
        <thead>
