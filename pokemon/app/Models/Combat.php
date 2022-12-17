@@ -29,4 +29,17 @@ class Combat extends Model
         $opponent_index = rand(0, $nb_opponents -1);
         return $opponents[$opponent_index];
     }
+
+    /**
+     * Once fightController found a winner, this method modify winner_id field of the combat
+     *
+     * @param int
+     * @param int
+     * @return null
+     */
+    public static function setWinner($combat_id, $winner_id){
+        $combat = Combat::find($combat_id);
+        $combat->winner_id = $winner_id;
+        $combat->save();
+    }
 }

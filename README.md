@@ -48,12 +48,13 @@ In order to set up the database on your server :
 9. <del>Implémentation des boutons de la toolbar et de leur page respective</del>
 
 - Faire un shop pour les energy
+- Affichage des golds
 - Affichage de la draft
 - Replays
 - Changer l'affichage du pokedex
 - Creer une fonction pour creer les statistiques des pokemons
 - Animation des combats
-- Changer d'avatar
+- <del>Changer d'avatar</del>
 - Requête ajax sur les pokemons
 - Requête ajax sur les energy
 

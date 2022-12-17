@@ -46,6 +46,16 @@ Route::middleware([
     Route::get('/menu/{menu}', 'App\Http\controllers\menuController@redirect')->name('menus');
 });
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::post('/friends-selection', function () {
+        return "The friend option is in devlopment, please go back and select a random opponent";
+        });
+});
+
 Route::get('/signup', function () {
     return view('auth.register');
     });

@@ -86,6 +86,8 @@ $(window).ready(function () {
     $('body').click(function (e) { 
         e.preventDefault();
         ii = ii + 1;
+        $('#hp-user-0').text(data['users_hp'][0]);
+        $('#hp-user-1').text(data['users_hp'][1]);
         if(ii >= count - 1){
             $('button').css('display', 'block');
         }else{

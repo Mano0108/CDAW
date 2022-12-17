@@ -63,7 +63,7 @@ class fightController extends Controller
         $data = Combat::find($combat_id);
         $data->lobby = $combat_id;
         $data->draft = Tour::getDraftPokemons($combat_id);
-        $data->users = User::whereIn('id', [$data->user1_id, $data->user2_id])->get();
+        $data->users = [User::find($data->user1_id), User::find($data->user2_id)];
         $data->pokemon_user = [$data->draft[0], $data->draft[1]];
         $data->users_hp = [$data->pokemon_user['0']['pv_max'], $data->pokemon_user['1']['pv_max']];
         $data->users_hp_last_turn = [$data->pokemon_user['0']['pv_max'], $data->pokemon_user['1']['pv_max']];
@@ -180,6 +180,8 @@ class fightController extends Controller
             if ($result[0]) {
                 $winner = $data['users'][$result[1]]['id'];
                 $data['winner_id'] = $winner;
+                Combat::setWinner($data['lobby'], $winner);
+                //return $data;
                 return view('combat.victory', [
                     'data' => $data
                 ]);
