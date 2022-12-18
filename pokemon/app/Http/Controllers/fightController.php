@@ -59,14 +59,19 @@ class fightController extends Controller
      */
     public function createCombatData($combat_id)
     {
+        //TODO: Supprimer le pokemon_user
         $data = Combat::find($combat_id);
         $data->lobby = $combat_id;
-        $data->draft = Tour::getDraft($combat_id);
-        $data->users = User::whereIn('id', [$data->user1_id, $data->user2_id])->get();
-        $data->pokemon_user = Pokemon::whereIn('pokemon_id', [$data->draft['0']['FK_pokemon_id'], $data->draft['1']['FK_pokemon_id']])->get();
+        $data->draft = Tour::getDraftPokemons($combat_id);
+        $data->users = [User::find($data->user1_id), User::find($data->user2_id)];
+        $data->pokemon_user = [$data->draft[0], $data->draft[1]];
         $data->users_hp = [$data->pokemon_user['0']['pv_max'], $data->pokemon_user['1']['pv_max']];
+        $data->users_hp_last_turn = [$data->pokemon_user['0']['pv_max'], $data->pokemon_user['1']['pv_max']];
         $data->users_pokemon_index = [0, 1];
         $data->current_turn = 0;
+        $name1 = strtoupper($data['pokemon_user'][0]['name']);
+        $name2 = strtoupper($data['pokemon_user'][1]['name']);
+        $data->animations = [["init","$name1 enter the arena"],["init","$name2 enter the arena"],["action", "What will $name1 do ?"]];
         return $data;
     }
 
@@ -148,6 +153,9 @@ class fightController extends Controller
     public function handleFight(Request $request)
     {
         $data = json_decode($request->data, true);
+        //return $data;
+        $data['users_hp_last_turn'] = $data['users_hp'];
+        $data['animations'] = [];
         $player_index = $data['current_turn'];
         Tour::create([
             'FK_user_id' => $data['users'][$player_index]['id'],
@@ -158,6 +166,9 @@ class fightController extends Controller
         if ($data['current_turn'] == 0) {
             $data['current_turn'] = 1;
         } else {
+            // Ajout des animations d'actions
+            $data['animations'] = $this->createActionAnimations($data['lobby']);
+            //return $data;
             //Application des degats = Actualisation des statistiques des pokemons
             $data = $this->applyDamage($data);
             if ($this->isDraw($data)) {
@@ -167,14 +178,21 @@ class fightController extends Controller
             }
             $result = $this->isVictory($data);
             if ($result[0]) {
-                $winner = $data['users'][$result[1]]['name'];
-                return "Vainqueur : $winner";
+                $winner = $data['users'][$result[1]]['id'];
+                $data['winner_id'] = $winner;
+                Combat::setWinner($data['lobby'], $winner);
+                //return $data;
+                return view('combat.victory', [
+                    'data' => $data
+                ]);
             }
             //return $data['users_pokemon_index'][0];
             $data = $this->swapPokemon($data);
             //return $data;
             $data['current_turn'] = 0;
         }
+        $name = strtoupper($data['pokemon_user'][$data['current_turn']]['name']);
+        array_push($data['animations'],["question", "What will $name do ?"]);
         //return $data;
         return view("combat.action", [
             'data' => $data
@@ -254,12 +272,25 @@ class fightController extends Controller
     {
         for ($ii = 0; $ii <= 1; $ii++) {
             if ($data['users_hp'][$ii] <= 0) {
-                $data['users_pokemon_index'][$ii] += 2; //index du pokemon +=2
-                $data['pokemon_user'][$ii] = Pokemon::find($data['draft'][$data['users_pokemon_index'][$ii]]['FK_pokemon_id']); //changement du pokemon dans pokemon_user
-                $data['users_hp'][$ii] = $data['pokemon_user'][$ii]['pv_max'];
+                //$data['users_pokemon_index'][$ii] += 2; //index du pokemon +=2
+                //$data['pokemon_user'][$ii] = $data['draft'][$data['users_pokemon_index'][$ii]]; //changement du pokemon dans pokemon_user
+                //$data['users_hp'][$ii] = $data['pokemon_user'][$ii]['pv_max'];
+                $new_pokemon_index = $data['users_pokemon_index'][$ii] + 2;
+                $name = strtoupper($data['draft'][$new_pokemon_index]['name']);
+                array_push($data['animations'], ["change", "$name enters the arena", $ii]);
             }
         }
         return $data;
+    }
+
+
+    //TODO: Implémenter dans apply damages
+    private function createActionAnimations($combat_id)
+    {
+        $actions = Tour::getLastTurn($combat_id);
+        $action0 = ["action", $actions[0]->action, 0];
+        $action1 = ["action", $actions[1]->action, 1];
+        return [$action0, $action1];
     }
 /*public function handleCombat(Request $request)
 {
