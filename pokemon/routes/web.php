@@ -64,6 +64,17 @@ Route::get('', function () {
     return view('auth.login');
     });
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {  
+    Route::post('/unlocked', 'App\Http\controllers\shopController')->name('unlock-energy');
+});
+
+
+
 Route::get('/test', 'App\Http\controllers\apiController@test')->name('test');
 
 /*redirect to login form
