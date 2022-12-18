@@ -181,7 +181,6 @@ class fightController extends Controller
                 $winner = $data['users'][$result[1]]['id'];
                 $data['winner_id'] = $winner;
                 Combat::setWinner($data['lobby'], $winner);
-                //return $data;
                 return view('combat.victory', [
                     'data' => $data
                 ]);

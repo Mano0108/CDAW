@@ -42,4 +42,8 @@ class Combat extends Model
         $combat->winner_id = $winner_id;
         $combat->save();
     }
+
+    public static function lastNFights($n){
+        return Combat::latest('combat_id')->limit($n)->get();
+    }
 }

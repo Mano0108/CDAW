@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Pokemon;
+use App\Models\Combat;
+use App\Models\Tour;
 use Illuminate\Support\Facades\URL;
 
 class menuController extends Controller
@@ -50,6 +52,12 @@ class menuController extends Controller
                     'menu' => $this->current_menu
             ]);
             case 'replays':
+                $n = 20;
+                $combats = Combat::lastNFights(20);
+                $data = ['combats' => $combats,
+                         'drafts' => Tour::getLastNDrafts($combats[$n-1]['combat_id'])
+            ];
+                return $data;
                 return view('menus.replays', [
                     'user' => auth()->user(),
                     'menu' => $this->current_menu

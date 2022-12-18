@@ -53,4 +53,16 @@ class Tour extends Model
     public static function getLastTurn($combat_id){
         return Tour::select('action')->where('FK_combat_id', '=', $combat_id,)->orderBy('created_at', 'desc')->take(2)->get();
     }
+
+    /**
+     * Return every pokemon_id (with the combat_id they are assossiated with) that was 
+     * selected during the last n fights. N is defined in the MenuController. 
+     * The parameter is the combat_id of the last combat minus n.
+     *
+     * @param int
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getLastNDrafts($combats_id){
+        return Tour::select('FK_pokemon_id', 'FK_combat_id')->where('action', '=', 0, 'AND')->where('FK_combat_id',">=", $combats_id)->orderBy('created_at', 'desc')->get();
+    }
 }
