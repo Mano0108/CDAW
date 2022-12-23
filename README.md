@@ -46,8 +46,8 @@ In order to set up the database on your server :
 7. <del>Création du mode de combat draft</del>
 8. Création du mode de combat ranked
 9. <del>Implémentation des boutons de la toolbar et de leur page respective</del>
+10. <del>Faire un shop pour les energy</del>
 
-- Faire un shop pour les energy
 - Affichage des golds
 - Affichage de la draft
 - Replays
