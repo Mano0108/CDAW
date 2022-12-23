@@ -12,6 +12,7 @@ class shopController extends Controller
     public function __invoke(Request $energy_id)
     {
         $user = auth()->user();
+        return $energy_id;
         if ($user->gold>80 ){
             DB::table('user_energy')->insert([
                 'FK_energy' => $energy_id , 
