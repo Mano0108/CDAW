@@ -6,7 +6,9 @@ body {
     height: 100%;
 }
 
-.left,
+.left{
+    width: 20%;
+}
 .right {
     width: 20%;
 }

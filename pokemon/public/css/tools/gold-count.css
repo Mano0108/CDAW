@@ -1,18 +1,17 @@
-#gold{
+.gold{
     overflow: hidden;
+    display: flex;
+    justify-content:start;
+    padding-left: 5%;
+
 }
 .gold-img{
-    margin: 0;
-    border: none;
-    outline: none;
-    text-align: left;
-    float: left;
+    padding-right: 10%;
+
   }
 .gold-count{
     font-size: 16px;
-    border: none;
-    outline: none;
     color: white;
-    text-align:right;
-    float: left;
+
+
   }
