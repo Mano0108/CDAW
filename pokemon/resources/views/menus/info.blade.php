@@ -32,9 +32,14 @@
                         @endfor
                 </tbody>
             </table>
-            <form action="/menu/shop" method="GET">
-                <button type="submit">Unlock</button>
-            </form>
+            <div id="unlock-button">
+                <form action="/menu/shop" method="GET">
+                    <div id="btn">
+                        <button type="submit">UNLOCK</button>
+                    </div>
+                </form>
+            </div>
+           
         </div>
         <div id='avatar-container'>
             <p id="level-number">Level : {{$user->level}}</p>

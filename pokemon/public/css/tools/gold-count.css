@@ -3,6 +3,7 @@
     display: flex;
     justify-content:start;
     padding-left: 5%;
+    align-items: center;
 
 }
 .gold-img{
