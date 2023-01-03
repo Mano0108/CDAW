@@ -165,6 +165,8 @@ class fightController extends Controller
         ]);
         if ($data['current_turn'] == 0) {
             $data['current_turn'] = 1;
+            $name = strtoupper($data['pokemon_user'][$data['current_turn']]['name']);
+            array_push($data['animations'],["question", "What will $name do ?"]);
         } else {
             // Ajout des animations d'actions
             $data['animations'] = $this->createActionAnimations($data['lobby']);
@@ -189,9 +191,9 @@ class fightController extends Controller
             $data = $this->swapPokemon($data);
             //return $data;
             $data['current_turn'] = 0;
+            $name = strtoupper($data['pokemon_user'][$data['current_turn']]['name']);
+            array_push($data['animations'],["question", "What will $name do ?"]);
         }
-        $name = strtoupper($data['pokemon_user'][$data['current_turn']]['name']);
-        array_push($data['animations'],["question", "What will $name do ?"]);
         //return $data;
         return view("combat.action", [
             'data' => $data

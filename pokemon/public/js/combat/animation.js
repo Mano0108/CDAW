@@ -88,7 +88,7 @@ $(window).ready(function () {
         ii = ii + 1;
         $('#hp-user-0').text(data['users_hp'][0]);
         $('#hp-user-1').text(data['users_hp'][1]);
-        if(ii >= count - 1){
+        if(ii >= count){
             $('button').css('display', 'block');
         }else{
         triggerAnimation(animations[ii][1]);

@@ -54,7 +54,7 @@
             <img id="favorite-pokemon-img" src="{{$stats["favorite_pokemon"]}}">
         </div>
         <div id='replays-container'>
-
+            <p>Work in progress</p>
         </div>
     </div>
 </x-app-layout>
