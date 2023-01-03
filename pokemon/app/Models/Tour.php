@@ -55,7 +55,7 @@ class Tour extends Model
     }
 
     /**
-     * Return every pokemon_id (with the combat_id they are assossiated with) that was 
+     * Return every pokemons (with the combat_id they are assossiated with) that was 
      * selected during the last n fights. N is defined in the MenuController. 
      * The parameter is the combat_id of the last combat minus n.
      *
@@ -63,6 +63,10 @@ class Tour extends Model
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public static function getLastNDrafts($combats_id){
-        return Tour::select('FK_pokemon_id', 'FK_combat_id')->where('action', '=', 0, 'AND')->where('FK_combat_id',">=", $combats_id)->orderBy('created_at', 'desc')->get();
+        $data = Tour::select('FK_pokemon_id', 'FK_combat_id')->where('action', '=', 0, 'AND')->where('FK_combat_id',">=", $combats_id)->orderBy('created_at', 'desc')->get();
+        foreach($data as $pokemon){
+            $pokemon['FK_pokemon_id'] = Pokemon::find($pokemon['FK_pokemon_id']);
+        }
+        return $data;
     }
 }

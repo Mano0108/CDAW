@@ -44,6 +44,11 @@ class Combat extends Model
     }
 
     public static function lastNFights($n){
-        return Combat::latest('combat_id')->limit($n)->get();
+        $data = Combat::latest('combat_id')->limit($n)->get();
+        foreach($data as $combat){
+            $combat['user1_id'] = User::find($combat['user1_id']);
+            $combat['user2_id'] = User::find($combat['user2_id']);
+        }
+        return $data;
     }
 }

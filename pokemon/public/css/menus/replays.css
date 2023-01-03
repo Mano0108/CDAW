@@ -1,0 +1,16 @@
+.versus{
+    color: firebrick;
+}
+
+.name{
+    display: flex;
+    justify-content:space-between;
+}
+
+.winner{
+    color: royalblue;
+}
+
+.draw{
+    color: gray;
+}

@@ -57,10 +57,11 @@ class menuController extends Controller
                 $data = ['combats' => $combats,
                          'drafts' => Tour::getLastNDrafts($combats[$n-1]['combat_id'])
             ];
-                return $data;
+                //return $data;
                 return view('menus.replays', [
                     'user' => auth()->user(),
-                    'menu' => $this->current_menu
+                    'menu' => $this->current_menu,
+                    'data' => $data
                 ]);
             default:
                 return $this->menuInfo($menu);
